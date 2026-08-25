@@ -1,25 +1,28 @@
-import React from 'react';
-function Field({ label, placeholder }) {
+import React, { useState } from 'react';
+import { Modal } from '../../feedback/Modal/Modal.jsx';
+import { Radio } from '../../forms/Radio/Radio.jsx';
+import { Button } from '../../forms/Button/Button.jsx';
+
+export function CaregiverModal({ open, onClose, onConfirm, patientName = 'the patient' }) {
+  const [isCaregiver, setIsCaregiver] = useState(null);
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-      <span style={{ fontWeight: 700, fontSize: 18, lineHeight: '28px', color: 'var(--pitch)' }}>{label}</span>
-      <div style={{ height: 48, borderRadius: 4, boxShadow: '0 0 0 1px var(--pitch)', display: 'flex', alignItems: 'center', padding: '0 16px' }}>
-        <input placeholder={placeholder} style={{ border: 'none', outline: 'none', width: '100%', fontFamily: 'var(--font-body)', fontSize: 18 }} />
+    <Modal open={open} onClose={onClose} title="">
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 21, width: 288, fontFamily: 'var(--font-body)' }}>
+        <h2 style={{ fontWeight: 700, fontSize: 26, lineHeight: '36px', color: 'var(--pitch)', margin: 0 }}>
+          Caregiver info for minors (under 18 years)
+        </h2>
+        <p style={{ fontSize: 16, lineHeight: '24px', color: 'var(--pitch)', margin: 0 }}>
+          Since {patientName} is a minor, an adult caregiver must complete the enrollment. Are you {patientName}'s legal caregiver?
+        </p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <Radio name="isCaregiver" label="Yes, I am" checked={isCaregiver === true} onChange={() => setIsCaregiver(true)} />
+          <Radio name="isCaregiver" label="No, I am not" checked={isCaregiver === false} onChange={() => setIsCaregiver(false)} />
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 12 }}>
+          <Button hierarchy="primary" fullWidth disabled={isCaregiver === null} onClick={() => onConfirm && onConfirm(isCaregiver)}>Confirm</Button>
+          <Button hierarchy="tertiary" fullWidth onClick={onClose}>Cancel</Button>
+        </div>
       </div>
-    </div>
-  );
-}
-export function CaregiverModal() {
-  return (
-    <div style={{ width: 360, borderRadius: 8, background: '#fff', boxShadow: 'var(--shadow-modal)', fontFamily: 'var(--font-body)', overflow: 'hidden' }}>
-      <div style={{ padding: '20px 24px', borderBottom: '1px solid var(--fade)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <span style={{ fontWeight: 700, fontSize: 20, color: 'var(--pitch)' }}>Are you a caregiver?</span>
-      </div>
-      <div style={{ padding: 24, display: 'flex', flexDirection: 'column', gap: 14 }}>
-        <p style={{ fontSize: 16, lineHeight: '24px', color: 'var(--gunmetal)', margin: 0 }}>Tell us who you're managing this prescription for.</p>
-        <Field label="Patient's last name" placeholder="Doe" />
-        <button style={{ height: 48, borderRadius: 4, background: 'var(--sky)', color: '#fff', border: 'none', fontFamily: 'var(--font-body)', fontWeight: 700, fontSize: 18, letterSpacing: '0.02em', cursor: 'pointer' }}>Continue as caregiver</button>
-      </div>
-    </div>
+    </Modal>
   );
 }
