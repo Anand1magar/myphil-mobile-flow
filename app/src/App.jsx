@@ -4,6 +4,7 @@ import { EnrollmentProvider } from './state/EnrollmentContext.jsx';
 import { WelcomePage } from './pages/WelcomePage.jsx';
 import { InsurancePage } from './pages/InsurancePage.jsx';
 import { AddressPage } from './pages/AddressPage.jsx';
+import { ThankYouPage } from './pages/ThankYouPage.jsx';
 
 export function App() {
   return (
@@ -15,6 +16,7 @@ export function App() {
             <Route path="/welcome" element={<WelcomePage />} />
             <Route path="/insurance" element={<InsurancePage />} />
             <Route path="/address" element={<AddressPage />} />
+            <Route path="/thank-you" element={<ThankYouPage />} />
           </Routes>
         </div>
       </BrowserRouter>
