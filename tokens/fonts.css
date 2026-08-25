@@ -1,0 +1,9 @@
+/* Lato = primary UI typeface (body, labels, buttons, inputs). Inter = secondary/spec typeface (used in Figma documentation pages, dashboards). Both real Google Fonts, loaded verbatim.
+   Mark OT = the wordmark + a few headline instances in the source file. Mark OT is a commercial Monotype face not available on Google Fonts — SUBSTITUTED with Manrope (closest free geometric humanist sans). Flagged in readme.md; ask the user for real Mark OT files to swap in. */
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400&family=Inter:wght@400;500;700&family=Manrope:wght@500;700;800&display=swap');
+
+:root{
+  --font-body: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-spec: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-brand: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* substitute for Mark OT */
+}

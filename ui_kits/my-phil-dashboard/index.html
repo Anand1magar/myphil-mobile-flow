@@ -1,0 +1,31 @@
+<!-- @dsCard group="My-Phil Dashboard" viewport="480x600" name="My Phil dashboard" subtitle="Prescriptions list → detail → profile (click through)" -->
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head><body style="margin:0;background:#F4F4F4">
+<div id="root"></div>
+<script type="text/babel" data-presets="react" src="./PrescriptionsScreen.jsx"></script>
+<script type="text/babel" data-presets="react" src="./PrescriptionDetail.jsx"></script>
+<script type="text/babel" data-presets="react" src="./ProfileScreen.jsx"></script>
+<script type="text/babel">
+function App(){
+  const [tab, setTab] = React.useState('rx');
+  const [selected, setSelected] = React.useState(null);
+  return (<div style={{minHeight:'100vh',background:'#fff',maxWidth:520,margin:'0 auto',boxShadow:'0 0 24px rgba(0,0,0,0.08)'}}>
+    <header style={{height:60,background:'#fff',borderBottom:'1px solid #D7DCDC',display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0 24px',fontFamily:'var(--font-body)'}}>
+      <span style={{fontWeight:800,fontSize:18,color:'#0A0A0A'}}>My.Phil</span>
+      <nav style={{display:'flex',gap:20}}>
+        <a onClick={()=>{setTab('rx');setSelected(null);}} style={{cursor:'pointer',fontWeight:700,color: tab==='rx' ? '#2363C3' : '#0A0A0A',textDecoration:'none'}}>Prescriptions</a>
+        <a onClick={()=>setTab('profile')} style={{cursor:'pointer',fontWeight:700,color: tab==='profile' ? '#2363C3' : '#0A0A0A',textDecoration:'none'}}>Profile</a>
+      </nav>
+    </header>
+    {tab==='rx' && !selected && <PrescriptionsScreen onSelect={setSelected} />}
+    {tab==='rx' && selected && <PrescriptionDetail rx={selected} onBack={()=>setSelected(null)} />}
+    {tab==='profile' && <ProfileScreen />}
+  </div>);
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body></html>

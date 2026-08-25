@@ -1,0 +1,30 @@
+/* Type scale transcribed verbatim from source instances (Lato Bold 18/24 buttons+inputs, Lato Bold 16/28 field labels, etc). Not snapped to a grid. */
+:root{
+  --text-2xs: 10px;
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-md: 18px;
+  --text-lg: 20px;
+  --text-xl: 24px;
+  --text-2xl: 30.9px;
+  --text-3xl: 38.8px;
+  --text-4xl: 48px;
+  --text-5xl: 50px;
+  --text-6xl: 64px;
+
+  --leading-tight: 100%;
+  --leading-snug: 24px;
+  --leading-normal: 28px;
+
+  --tracking-tight: 0.002em;
+  --tracking-wide: 0.02em;
+  --tracking-label: 1px;
+
+  --weight-light: 300;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-black: 900;
+}

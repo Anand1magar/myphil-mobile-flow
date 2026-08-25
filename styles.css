@@ -1,0 +1,10 @@
+@import './tokens/fonts.css';
+@import './tokens/colors.css';
+@import './tokens/typography.css';
+@import './tokens/spacing.css';
+@import './tokens/fig-tokens.css';
+
+a{color:var(--text-link);text-decoration:underline}
+a:hover{color:var(--sky-hover)}
+*{box-sizing:border-box}
+body{font-family:var(--font-body);color:var(--text-primary);margin:0}

@@ -1,0 +1,61 @@
+/* "Phil Rebrand" palette — exact hex values transcribed from the file's Rebranded-colors reference page. */
+:root{
+  /* Brand: blue */
+  --sky: #2363C3;       /* primary CTA blue — most-used accent in the file */
+  --sky-hover: #4F82CF; /* button hover, verified via source */
+  --sky-disabled: #A7C1E7;
+  --sky-tint: #F4F9FE;
+
+  /* Brand: teal/green */
+  --foliage: #00827E;
+  --grass: #09AAA5;
+  --slime: #D5F1F0;
+  --tradewind: #5ABEA4;
+  --spindrift: #6DDFC1;
+  --teal-bright: #00CCAE; /* high-usage accent teal seen across icons/highlights */
+  --mood: #009FB2;
+  --teal: #00B6CC;
+  --gel: #99D0D7;
+
+  /* Neutrals */
+  --pitch: #0A0A0A;     /* primary text / ink */
+  --gunmetal: #525252;  /* secondary text */
+  --mortar-grey: #9E9E9E;
+  --fade: #D7DCDC;      /* default borders */
+  --base: #E6E6E6;
+  --paper: #F4F4F4;     /* light surfaces */
+  --pure: #FFFFFF;
+
+  /* Semantic */
+  --sun: #EDBE3D;   /* warning */
+  --ruby: #B91D13;  /* error / danger */
+  --success: #007D00;
+  --lime: #80C600;
+
+  /* Semantic aliases (what components consume) */
+  --text-primary: var(--pitch);
+  --text-secondary: var(--gunmetal);
+  --text-muted: var(--mortar-grey);
+  --text-inverse: var(--pure);
+  --text-link: var(--sky);
+
+  --surface-page: var(--pure);
+  --surface-subtle: var(--paper);
+  --surface-raised: var(--pure);
+  --surface-inverse: var(--pitch);
+
+  --border-default: var(--fade);
+  --border-strong: var(--pitch);
+  --border-focus: var(--sky);
+  --border-error: var(--ruby);
+
+  --brand-primary: var(--sky);
+  --brand-primary-hover: var(--sky-hover);
+  --brand-primary-disabled: var(--sky-disabled);
+  --brand-accent: var(--teal-bright);
+
+  --state-success: var(--success);
+  --state-warning: var(--sun);
+  --state-error: var(--ruby);
+  --state-info: #4A90E2;
+}
