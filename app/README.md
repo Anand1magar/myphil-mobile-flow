@@ -26,6 +26,23 @@ Open the printed localhost URL. Routes:
 4. Add the route in `src/App.jsx` and wire navigation (`useNavigate`) from
    the adjacent screens.
 
+## Known limitations
+
+- **Keyboard accessibility:** the design system's `Radio` and `Checkbox`
+  components (used on `/insurance` and `/address`) hide their native
+  `<input>` with `display:none`, which removes them from the tab order —
+  they currently can't be operated by keyboard or assistive technology.
+  This is a pre-existing design-system limitation, not introduced by this
+  app. Fixing it requires updating `components/forms/Radio/Radio.jsx` and
+  `components/forms/Checkbox/Checkbox.jsx` to use a visually-hidden-but-focusable
+  pattern instead of `display:none`.
+- **No prop-contract safety net:** this project has no TypeScript and no
+  automated tests, so `npm run build` succeeding does not guarantee a
+  design-system component's props still match what a page expects — if a
+  component's prop name or behavior changes upstream, the app would build
+  cleanly but render a degraded or blank control at runtime. Worth
+  keeping in mind when editing shared `components/` files.
+
 ## Status
 
 Phase 1 (enrollment funnel) — see
