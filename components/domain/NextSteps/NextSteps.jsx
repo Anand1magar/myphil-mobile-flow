@@ -1,7 +1,7 @@
 import React from 'react';
 export function NextSteps({ title = "What's next", steps = [] }) {
   return (
-    <div style={{ width: 320, fontFamily: 'var(--font-body)', display: 'flex', flexDirection: 'column', gap: 16, padding: 16, borderRadius: 4, boxShadow: 'inset 0 0 0 1px var(--fade)', background: '#fff' }}>
+    <div style={{ width: '100%', boxSizing: 'border-box', fontFamily: 'var(--font-body)', display: 'flex', flexDirection: 'column', gap: 16, padding: 16, borderRadius: 4, boxShadow: 'inset 0 0 0 1px var(--fade)', background: '#fff' }}>
       <span style={{ fontWeight: 700, fontSize: 18, lineHeight: '28px', color: 'var(--pitch)' }}>{title}</span>
       {steps.map((s, i) => (
         <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>

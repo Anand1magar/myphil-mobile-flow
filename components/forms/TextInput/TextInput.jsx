@@ -5,7 +5,7 @@ export function TextInput({ label, placeholder = 'Placeholder', state = 'default
   const borderColor = { default: 'var(--pitch)', focused: 'var(--sky)', error: 'var(--ruby)', verified: 'var(--foliage)', filled: 'var(--pitch)' }[effState];
   const helperColor = effState === 'error' ? 'var(--ruby)' : 'var(--gunmetal)';
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 8, width: 288, fontFamily: 'var(--font-body)' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8, width: '100%', boxSizing: 'border-box', fontFamily: 'var(--font-body)' }}>
       {label && <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <span style={{ fontWeight: 700, fontSize: 18, lineHeight: '28px', letterSpacing: '0.002em', color: 'var(--pitch)' }}>{label}</span>
       </div>}
