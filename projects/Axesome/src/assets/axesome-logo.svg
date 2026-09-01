@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="150" height="24" viewBox="0 0 150 24" role="img" aria-label="Axesome">
+  <g fill="none" fill-rule="evenodd">
+    <path d="M6 4 L11 20 H8.2 L7.2 16.6 H3.8 L2.8 20 H0 L5 4 Z M5.5 8.4 L4.4 12.4 H6.6 Z" fill="#2F1147"/>
+    <text x="16" y="18" font-family="'Lato', Arial, sans-serif" font-size="17" font-weight="800" letter-spacing="0.5" fill="#2F1147">axesome</text>
+    <circle cx="143" cy="7" r="3" fill="#A82B91"/>
+  </g>
+</svg>

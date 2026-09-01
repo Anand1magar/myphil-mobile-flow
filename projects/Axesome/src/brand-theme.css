@@ -1,0 +1,21 @@
+/* Axesome white-label theme overrides.
+   Loaded after @ds/styles.css in main.jsx, so these :root values win over the
+   PhilRx design-system defaults. Only the brand-owned tokens are overridden —
+   everything else stays on PhilRx defaults per the brand spec. */
+:root {
+  /* Primary / CTA / accent (the --sky family the design system consumes) */
+  --sky: #2F1147;
+  --sky-hover: #59416C;
+  --sky-disabled: #ACA0B5;
+  --sky-tint: #F5F3F6;
+
+  /* Semantic aliases that point at the primary */
+  --brand-primary: #2F1147;
+  --brand-primary-hover: #59416C;
+  --brand-primary-disabled: #ACA0B5;
+  --text-link: #2F1147;
+
+  /* Secondary brand color */
+  --secondary: #A82B91;
+  --brand-accent: #A82B91;
+}
