@@ -1,55 +1,49 @@
 # White-Label Flow System — Design
 
 **Date:** 2026-09-01
-**Status:** Approved for planning
+**Status:** Approved for planning (v2 — adds strings, per-brand flow, first brand Axsome)
 
 ## Problem
 
 `myphil-base-flow/` is a finished (modulo minor tweaks) Vite + React + react-router
 app of ~21 screens, composed from the repo's shared design system via the `@ds`
-alias. We need to produce many branded ("white-label") versions of this exact flow
-— same screens, navigation, interactions, layout, responsive behavior — changing
-only visual brand identity. Doing this by hand (copy + edit every screen per brand)
-does not scale.
+alias. We need many branded ("white-label") versions of this flow that differ only
+in brand identity — and, per real client requirements, in a limited set of screen
+text and in which screens run and in what order. Doing this by hand per brand does
+not scale.
 
-**Base Flow = source of truth. White-label = branded version of the Base Flow.**
+**Base Flow = source of truth. White-label = branded + configured version of it.**
 
 ## Chosen approach
 
-**Single shared app; brand selected at build/run time.** Screen and component code
-is never copied per brand. Each brand is a *pure-data folder* (theme + config +
-assets, no code). Running or deploying a brand points the base flow at that folder
-via a `BRAND` environment variable.
+**Single shared app; brand selected locally by URL segment, baked in at deploy.**
+Screen/component code is never copied per brand. Each brand is a data folder:
+`brand.json`, `theme.css`, `strings.json`, `flow.json`, `assets/`. No brand code.
 
-Rejected alternatives:
-- *Per-brand Vite project* — config drift across brands, more moving parts, no
-  benefit since screens are shared.
-- *Full copy per brand* — defeats the "don't rebuild the flow" goal; ruled out by
-  the user.
+Rejected: per-brand Vite project (config drift), full copy per brand (defeats the
+goal; ruled out by user).
 
-### Scope decisions (from brainstorming)
+### Scope (from brainstorming, revised)
 
-- Brand-specific config covers **colors** and **logo / image assets** only.
-- Typography/fonts are **not** themed per brand (shared design-system fonts).
-- Copy strings are **not** themed. **Known limitation:** white-label previews still
-  render the literal words "PhilRx" / "© Phil, Inc." in the SMS body and footer.
-  Accepted for now; a `strings` map can be added later without rework.
-- Base flow tweaks are done *after* this system is built; they propagate
-  automatically because screens are shared.
+In scope per brand: **colors**, **logo + image assets**, **a fixed set of screen
+text overrides**, **screen selection + order**, **caregiver-modal toggle**.
+Out of scope: per-brand fonts/typography; arbitrary copy rewriting (only the
+enumerated string keys are overridable); CI automation; auth/backends.
+
+**Known limitation:** strings not in the override key list stay on PhilRx defaults
+(e.g. WelcomePage "Phil partners with the makers of…", HIPAA "c/o Phil, Inc.",
+footer "© Phil, Inc."). Adding a key later is a one-line change.
 
 ## Folder structure
 
 ```
-brands/
-  base/                 PhilRx identity, extracted from today's design system
-    brand.json
-    theme.css
-    assets/
-  <brand-slug>/
-    brand.json
-    theme.css
-    assets/
-myphil-base-flow/       unchanged location — source of truth for screens/flow
+projects/
+  base-flow/            the current myphil-base-flow/, MOVED here — source of truth
+                        for all screen/flow/component code
+  base/                 PhilRx brand data (brand.json, theme.css, strings.json,
+                        flow.json, assets/)
+  axsome/               first white-label brand (data only)
+  <brand-slug>/         data only
 scripts/
   new-brand.mjs
   run.mjs
@@ -57,127 +51,198 @@ scripts/
 .claude/skills/white-label/SKILL.md
 ```
 
-`brands/base/` is generated once by extracting the current PhilRx logo + color
-tokens. With `BRAND` unset, the base flow defaults to `base` and behaves exactly as
-today.
+Git-move `myphil-base-flow/` → `projects/base-flow/`; update its `@ds` alias from
+`..` to `../..`. PhilRx identity is extracted out of `base-flow` into
+`projects/base/` so the base flow carries no hardcoded brand.
 
-## Data contracts
+## Local dev — one server, brand in the URL
 
-### `brands/<slug>/brand.json`
+`npm run dev` in `projects/base-flow/` starts one server aware of every
+`projects/*` folder (glob-imported):
 
+```
+localhost:5173/                → brand picker (lists every projects/* brand)
+localhost:5173/<brand>/welcome → full flow themed + configured for <brand>
+localhost:5173/base/welcome    → PhilRx
+```
+
+The brand is the first path segment. `BrandProvider` reads the `:brand` segment,
+applies that brand's CSS-variable overrides to `:root`, resolves logo/asset URLs,
+and provides `strings` + `flow`. Adding a brand folder makes it appear in the
+picker automatically — no code change.
+
+## Deploy — one brand, its own isolated Vercel URL
+
+`node scripts/deploy.mjs <brand>`:
+
+1. `BRAND=<brand> npm --prefix projects/base-flow run build` — brand baked in via
+   `virtual:brand`; routes mounted at root (no `/<brand>` prefix). Fails loudly on
+   broken imports.
+2. `vercel deploy --prod --yes` into project `myphil-<brand>` (non-interactive).
+3. Parse deployment URL → write to `projects/<brand>/brand.json:previewUrl`.
+4. `curl -sf <url>` → assert HTTP 200 and brand `name` present in HTML.
+5. Print **local + public URLs**.
+
+`vercel login` is a one-time manual step before the first deploy. Fallback if no
+Vercel account: `cloudflared`/`localtunnel` ephemeral URL.
+
+`BrandProvider` has two modes: **local** = brand from URL segment; **production
+build** = brand from `virtual:brand` baked at build time. Same screens both ways.
+
+## Data contracts (`projects/<slug>/`)
+
+### `brand.json`
 ```json
 {
-  "name": "Brand 2",
-  "slug": "brand-2",
-  "logo": "assets/brand2.png",
-  "images": { "hero": "assets/hero.png" },
-  "vercelProject": "myphil-brand-2",
+  "name": "Axsome",
+  "slug": "axsome",
+  "logo": "assets/logo-placeholder.svg",
+  "images": {},
+  "vercelProject": "myphil-axsome",
   "previewUrl": null
 }
 ```
 
-- `name` — used for `<title>` and logo `alt` text only (not injected into screen copy).
-- `logo` / `images.*` — paths relative to the brand folder.
-- `vercelProject` — Vercel project slug for this brand's deploy.
-- `previewUrl` — written back by `deploy.mjs` after a successful deploy.
-
-### `brands/<slug>/theme.css`
-
-Only the brand-owned color tokens; neutrals stay shared from
-`tokens/colors.css`. Loaded *after* the design-system tokens so it overrides.
-
+### `theme.css` — brand-owned color tokens only; neutrals stay shared
 ```css
 :root{
-  --sky: #XXXXXX;              /* brand primary */
-  --sky-hover: <derived lighten ~12%>;
-  --sky-disabled: <derived lighten ~40%>;
+  --sky: #2F1147;          /* primary CTA / accent */
+  --sky-hover: #59416C;
+  --sky-disabled: #ACA0B5;
+  --sky-tint: #F5F3F6;
   --brand-primary: var(--sky);
-  /* teal/foliage family only when the brand supplies secondary colors */
+  --brand-primary-hover: var(--sky-hover);
+  --brand-primary-disabled: var(--sky-disabled);
+  --secondary: #A82B91;   /* new token; see note */
+  --header-tagline: #2F1147;  /* new token consumed by MyPhilHeader tagline */
 }
 ```
+`base/theme.css` is empty `:root{}` (design-system defaults already are PhilRx).
+`new-brand.mjs` auto-derives hover/disabled/tint from the primary unless supplied.
 
-Derived shades are computed by `new-brand.mjs` from the primary; can be
-hand-edited afterward.
+### `strings.json` — only these keys are overridable
+```json
+{
+  "drugName": "SYMBRAVO® (meloxicam and rizatriptan)",
+  "pharmacyName": "Axsome OnMySide Direct",
+  "accountLabel": "Axsome OnMySide account"
+}
+```
+base defaults: `"Drugname (chemical compositions) (volume)"`, `"PhilRx Pharmacy"`,
+`"Phil account"`. Consumed via `useBrand().strings.*`. Key `drugName` also fills
+the HIPAA `[Drugname]` placeholder.
 
-## Base-flow changes (one-time, behavior-preserving)
+### `flow.json` — ordered route list; drives navigation
+```json
+{
+  "start": "/welcome",
+  "steps": [
+    { "route": "/welcome" },
+    { "route": "/insurance-details" },
+    { "route": "/contact-information" },
+    { "route": "/savings-hipaa" },
+    { "route": "/enrollment-success" },
+    { "route": "/create-password" }
+  ],
+  "caregiverModal": false,
+  "terminal": "/create-password"
+}
+```
+- The base flow's per-screen hardcoded `navigate('/next')` calls are replaced by a
+  `useFlow().next()` helper that reads `flow.json` and navigates to the next step
+  in the list. Secondary/branching buttons (e.g. "No, I have a different card")
+  keep explicit targets but those routes must exist in `steps` or the helper
+  no-ops with a dev warning.
+- Routes present in `base/flow.json` but absent from a brand's `steps` are simply
+  not mounted for that brand.
+- `caregiverModal: false` makes `/welcome`'s Next call `next()` directly instead of
+  opening `CaregiverModal`.
 
-1. **`myphil-base-flow/vite.config.js`** — read `process.env.BRAND` (default
-   `base`); add `@brand` alias → `../brands/<BRAND>`; expose `brand.json` as a
-   virtual module (`virtual:brand`).
-2. **`myphil-base-flow/src/main.jsx`** — import `@brand/theme.css` after
-   `@ds/styles.css`; wrap `<App/>` in `<BrandProvider>` holding parsed brand
-   config + resolved asset URLs (Vite `new URL('@brand/...', import.meta.url)` or
-   glob import of the brand assets folder).
-3. **`src/brand/BrandContext.jsx`** (new) — `BrandProvider` + `useBrand()` hook.
-4. **`src/components/PhilRxHeader.jsx`, `PhilRxAppHeader.jsx`** — replace direct
-   `philrx-logo-color.png` import with `useBrand().logo` / `.name`.
-5. **`src/pages/SmsPage.jsx`, `src/pages/CheckoutSmsPage.jsx`** — replace hardcoded
-   `#2363c3` link color with `var(--sky)`.
-6. **`src/assets/nav-rx.svg`, `src/assets/nav-profile.svg`** — change baked
-   `fill="#00827E"` to `fill="currentColor"`; set `color: var(--foliage)` on the
-   `<img>`→inline-SVG usage (switch these two to inline `<svg>` or a
-   `mask`-based icon so `currentColor` takes effect).
-7. **`index.html`** — `<title>` becomes generic ("Flow preview"); per-brand title
-   set at runtime from `useBrand().name` in `main.jsx`.
+## Base-flow changes (one-time)
 
-No other screen changes. Layout, navigation, routes, interactions, copy unchanged.
+1. **`projects/base-flow/vite.config.js`** — `@ds` → `../..`; read
+   `process.env.BRAND`; `@brand` alias → `../<BRAND>` (prod) ; glob `../*/` for the
+   picker (dev); expose `virtual:brand`.
+2. **`src/main.jsx`** — load `@ds/styles.css` then brand `theme.css`; wrap in
+   `<BrandProvider>`; set `document.title` from brand name.
+3. **`src/brand/BrandContext.jsx`** (new) — `BrandProvider`, `useBrand()`.
+4. **`src/brand/useFlow.js`** (new) — `next()`, `flow`, current-step lookup.
+5. **`src/App.jsx`** — routes generated from the active `flow.json` (dev: nested
+   under `/:brand`); brand picker at `/`.
+6. **`components/navigation/MyPhilHeader/MyPhilHeader.jsx`** — logo from
+   `useBrand().logo`, `alt`/tagline stay text; tagline color →
+   `var(--header-tagline, var(--foliage))`.
+7. **`src/components/PhilRxAppHeader.jsx`, `PhilRxHeader.jsx`** — logo from
+   `useBrand()` (not in Axsome's 6 screens but keeps things consistent).
+8. **`src/pages/SmsPage.jsx`, `CheckoutSmsPage.jsx`** — `#2363c3` → `var(--sky)`.
+9. **`src/assets/nav-rx.svg`, `nav-profile.svg`** — `fill="#00827E"` →
+   `currentColor`; render inline so `color: var(--foliage)` applies.
+10. **String call-sites** in the 7 affected pages — replace the three overridable
+    literals with `useBrand().strings.*` (base defaults preserved).
+11. **New screen `src/pages/SavingsHipaaPage.jsx`** at route `/savings-hipaa` —
+    combines `SavingsEnrollmentPage` + `HipaaAuthorizationPage` content into one
+    scrollable screen: savings terms + "Agree and enroll", then the HIPAA
+    authorization text + `SignaturePad`, then a single mandatory primary button
+    that calls `useFlow().next()`. **No decline/skip path** (no
+    `DeclineEnrollmentModal`, no "No thanks"). Reuses existing sub-content; the
+    standalone `/savings-enrollment` and `/hipaa-authorization` screens stay in the
+    repo for `base` and other brands.
+
+No layout, spacing, or interaction changes beyond the above. Copy outside the three
+string keys is untouched.
 
 ## Scripts
 
-### `scripts/new-brand.mjs <slug>`
+- **`new-brand.mjs <slug> --primary <hex> [--secondary <hex>] [--name <str>] [--logo <path>]`**
+  — refuse if exists; copy `projects/base/` → `projects/<slug>/`; write `theme.css`
+  (derive hover/disabled/tint), `brand.json`, empty `strings.json` (= defaults),
+  `flow.json` = copy of base; place logo (or generate an SVG placeholder with the
+  brand name); print next steps.
+- **`run.mjs [slug]`** — no slug ⇒ list `projects/*` and prompt; then
+  `npm --prefix projects/base-flow run dev`; print `localhost:5173/<slug>/…`.
+- **`deploy.mjs <slug>`** — build + Vercel deploy + write-back + smoke check (above).
 
-1. Refuse if `brands/<slug>/` exists.
-2. Copy `brands/base/` → `brands/<slug>/`.
-3. Overwrite `theme.css` with the supplied primary + derived shades.
-4. Drop the supplied logo into `assets/`, update `brand.json`
-   (`name`, `slug`, `logo`, `vercelProject: "myphil-<slug>"`, `previewUrl: null`).
-5. Print next steps.
+## Agent skill — `.claude/skills/white-label/SKILL.md`
 
-### `scripts/run.mjs [slug]`
+`user-invocable: true`. Intents:
 
-1. If no slug: list `brands/*`, prompt for a choice.
-2. `BRAND=<slug> npm --prefix myphil-base-flow run dev`.
-3. Print the localhost URL (with brand name).
+- **Create white-label** — parse brand name / primary / secondary / logo / screen
+  list / string overrides / exclusions from the user's message; run
+  `new-brand.mjs`; edit `theme.css`, `strings.json`, `flow.json` per the request;
+  build to validate; `deploy.mjs`; return **local + Vercel URLs**.
+- **Run** — enumerate `projects/*`, ask which, `run.mjs`, return localhost URL.
+- **New independent flow** (not brand-of-base) — do not touch `projects/`; scaffold
+  a separate sibling app.
 
-### `scripts/deploy.mjs <slug>`
+Must not alter base-flow screens/navigation/interactions/copy beyond a brand's
+declared config unless the user explicitly asks.
 
-1. `BRAND=<slug> npm --prefix myphil-base-flow run build` — fail loudly on broken
-   imports.
-2. `vercel deploy --prod --yes --cwd myphil-base-flow/dist` (or `vercel` with
-   `--name <vercelProject>`), non-interactive.
-3. Parse the deployment URL, write it to `brands/<slug>/brand.json:previewUrl`.
-4. `curl -sf <url>` — assert HTTP 200 and that `brand.name` appears in the HTML.
-5. Print **local + public URLs**.
+## First brand — Axsome (`projects/axsome/`)
 
-`vercel login` is a one-time manual step by the user before the first deploy.
-
-## The agent skill — `.claude/skills/white-label/SKILL.md`
-
-`user-invocable: true`. Recognizes three intents:
-
-- **Create white-label** — "Create a white-label for Brand 2, logo
-  `assets/brand2.png`, primary `#XXXXXX`":
-  run `new-brand.mjs`, then `deploy.mjs`, return local + Vercel URLs.
-- **Run** — "Run this project": enumerate `brands/*`, ask which, run `run.mjs`,
-  return localhost URL.
-- **New independent flow** — when the request is *not* a brand of the base flow:
-  do **not** touch `brands/`; scaffold a separate sibling app.
-
-The skill workflow mirrors the diagram: create brand folder → apply config → apply
-logo/assets → apply colors → `vite build` (validate) → deploy → return both links.
-It must not modify the base flow's screens, navigation, interactions, or copy
-unless the user explicitly asks.
+- **name** "Axsome", **slug** `axsome` (spelling normalized from "axesome" — every
+  supplied string uses "Axsome"; user to confirm).
+- **theme.css**: `--sky #2F1147`, `--sky-hover #59416C`, `--sky-disabled #ACA0B5`,
+  `--sky-tint #F5F3F6`, `--secondary #A82B91`, `--header-tagline #2F1147`. Header
+  bg, text color = defaults.
+- **logo**: generated SVG placeholder reading "Axsome".
+- **strings.json**: the three values above.
+- **flow.json**: the 6 steps above, `start /welcome`, `caregiverModal false`,
+  `terminal /create-password`. `/savings-hipaa` is the mandatory combined screen.
+- Screens excluded for Axsome: everything except the 6 (SMS, insurance upload/
+  review, coupon, checkout-sms, login, OTP, prescriptions, payment, order-conf,
+  standalone savings & hipaa, caregiver modal).
+- Deploy target: `myphil-axsome` → `myphil-axsome.vercel.app`.
 
 ## Testing / validation
 
-- No unit-test framework added (base flow has none today).
-- `vite build` per brand is the structural check (catches broken imports/aliases).
-- Post-deploy HTTP 200 + brand-name-in-HTML smoke check in `deploy.mjs`.
-- Manual: `run.mjs base` must render identically to today's `npm run dev`.
+- No unit-test framework added (base flow has none).
+- `vite build` per brand = structural check.
+- Post-deploy HTTP 200 + brand-name-in-HTML smoke check.
+- Manual: `run.mjs base` renders identically to today's `npm run dev`;
+  `run.mjs axsome` walks the 6 screens in order, combined screen is mandatory,
+  no caregiver modal.
 
 ## Out of scope
 
-- Theming fonts/typography per brand.
-- Theming copy strings (documented limitation above).
-- CI/CD automation of deploys.
-- Auth or any backend for previews.
+Per-brand fonts; arbitrary copy rewriting beyond the string keys; CI/CD;
+auth/backends; visual regression testing.
