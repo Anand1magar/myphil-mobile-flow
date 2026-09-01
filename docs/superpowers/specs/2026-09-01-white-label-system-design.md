@@ -42,7 +42,7 @@ projects/
                         for all screen/flow/component code
   base/                 PhilRx brand data (brand.json, theme.css, strings.json,
                         flow.json, assets/)
-  axsome/               first white-label brand (data only)
+  Axesome/              first white-label brand (data only; folder name per user)
   <brand-slug>/         data only
 scripts/
   new-brand.mjs
@@ -94,11 +94,11 @@ build** = brand from `virtual:brand` baked at build time. Same screens both ways
 ### `brand.json`
 ```json
 {
-  "name": "Axsome",
-  "slug": "axsome",
+  "name": "Axesome",
+  "slug": "axesome",
   "logo": "assets/logo-placeholder.svg",
   "images": {},
-  "vercelProject": "myphil-axsome",
+  "vercelProject": "myphil-axesome",
   "previewUrl": null
 }
 ```
@@ -217,10 +217,15 @@ string keys is untouched.
 Must not alter base-flow screens/navigation/interactions/copy beyond a brand's
 declared config unless the user explicitly asks.
 
-## First brand — Axsome (`projects/axsome/`)
+## First brand — Axesome (`projects/Axesome/`)
 
-- **name** "Axsome", **slug** `axsome` (spelling normalized from "axesome" — every
-  supplied string uses "Axsome"; user to confirm).
+- **folder** `projects/Axesome/` (name per user). **display name** "Axesome".
+  **slug** `axesome` — lowercased for the URL segment and the Vercel project name
+  (`myphil-axesome`), which must be lowercase.
+- The three screen-text values are used **verbatim as supplied** and say "Axsome"
+  ("Axsome OnMySide Direct", "Axsome OnMySide account"). The "Axesome" display name
+  only appears in the logo placeholder, `<title>`, and logo `alt`. This
+  inconsistency is intentional per the user's instructions.
 - **theme.css**: `--sky #2F1147`, `--sky-hover #59416C`, `--sky-disabled #ACA0B5`,
   `--sky-tint #F5F3F6`, `--secondary #A82B91`, `--header-tagline #2F1147`. Header
   bg, text color = defaults.
@@ -231,7 +236,7 @@ declared config unless the user explicitly asks.
 - Screens excluded for Axsome: everything except the 6 (SMS, insurance upload/
   review, coupon, checkout-sms, login, OTP, prescriptions, payment, order-conf,
   standalone savings & hipaa, caregiver modal).
-- Deploy target: `myphil-axsome` → `myphil-axsome.vercel.app`.
+- Deploy target: `myphil-axesome` → `myphil-axesome.vercel.app`.
 
 ## Testing / validation
 
@@ -239,7 +244,7 @@ declared config unless the user explicitly asks.
 - `vite build` per brand = structural check.
 - Post-deploy HTTP 200 + brand-name-in-HTML smoke check.
 - Manual: `run.mjs base` renders identically to today's `npm run dev`;
-  `run.mjs axsome` walks the 6 screens in order, combined screen is mandatory,
+  `run.mjs axesome` walks the 6 screens in order, combined screen is mandatory,
   no caregiver modal.
 
 ## Out of scope
