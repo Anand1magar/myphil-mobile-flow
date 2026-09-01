@@ -1,0 +1,10 @@
+# Builds the My Phil Experience mobile flow (myphil-base-flow) from the repo root
+# so the @ds/* imports (../components, ../assets, ../tokens) resolve.
+[build]
+  command = "npm run build"
+  publish = "myphil-base-flow/dist"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
