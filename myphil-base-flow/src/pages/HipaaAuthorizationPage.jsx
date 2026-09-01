@@ -20,6 +20,8 @@ const HIPAA_PARAGRAPHS = [
   'This Authorization will expire 5 years after I sign it, or earlier if required by state law, unless I cancel it sooner.  If I do not sign this Authorization or cancel it, I may no longer qualify for the Services, but it will not impact my treatment, enrollment in my health plan or my insurance benefits. I have read and agree to the Authorization statement above.',
 ];
 
+const NEXT_ROUTE = '/savings-enrollment-hipaa-authorization-combined';
+
 export function HipaaAuthorizationPage() {
   const navigate = useNavigate();
   return (
@@ -29,25 +31,25 @@ export function HipaaAuthorizationPage() {
       <div style={{ width: '100%', flex: 1, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 20, padding: '20px 16px 147px' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           <h1 style={{ fontSize: 26, fontWeight: 700, lineHeight: '36px', color: 'var(--pitch)', margin: 0 }}>HIPAA Authorization</h1>
-          <p style={{ fontSize: 16, lineHeight: '24px', color: 'var(--pitch)', margin: 0 }}>
+          <p style={{ fontSize: 16, lineHeight: '24px', letterSpacing: '0.024px', color: 'var(--pitch)', margin: 0 }}>
             To assist us in processing your prescription, please review and sign the HIPAA authorization below.
           </p>
         </div>
 
         <div style={{ height: 154, overflowY: 'auto', border: '2px solid var(--fade)', borderRadius: 4, padding: 16, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 12 }}>
           {HIPAA_PARAGRAPHS.map((paragraph, i) => (
-            <p key={i} style={{ fontSize: 14, lineHeight: '20px', color: 'var(--pitch)', margin: 0, whiteSpace: 'pre-wrap' }}>{paragraph}</p>
+            <p key={i} style={{ fontSize: 14, lineHeight: '20px', letterSpacing: '0.035px', color: 'var(--pitch)', margin: 0, whiteSpace: 'pre-wrap' }}>{paragraph}</p>
           ))}
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-          <p style={{ fontSize: 16, fontWeight: 700, lineHeight: '24px', color: 'var(--pitch)', margin: 0 }}>Draw your signature in the box below</p>
-          <SignaturePad />
+          <p style={{ fontSize: 16, fontWeight: 700, lineHeight: '24px', letterSpacing: '0.024px', color: 'var(--pitch)', margin: 0 }}>Draw your signature in the box below</p>
+          <SignaturePad height={141} />
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-          <Button hierarchy="primary" fullWidth onClick={() => navigate('/coupon-enrollment')}>Confirm</Button>
-          <Button hierarchy="secondary" fullWidth>No thanks</Button>
+          <Button hierarchy="primary" fullWidth onClick={() => navigate(NEXT_ROUTE)}>Confirm</Button>
+          <Button hierarchy="secondary" fullWidth onClick={() => navigate(NEXT_ROUTE)}>No thanks</Button>
         </div>
       </div>
 

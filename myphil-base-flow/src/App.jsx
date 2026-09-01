@@ -8,7 +8,7 @@ import { InsuranceCardReviewPage } from './pages/InsuranceCardReviewPage.jsx';
 import { ContactInformationPage } from './pages/ContactInformationPage.jsx';
 import { SavingsEnrollmentPage } from './pages/SavingsEnrollmentPage.jsx';
 import { HipaaAuthorizationPage } from './pages/HipaaAuthorizationPage.jsx';
-import { CouponEnrollmentPage } from './pages/CouponEnrollmentPage.jsx';
+import { SavingsHipaaAuthorizationPage } from './pages/SavingsHipaaAuthorizationPage.jsx';
 import { EnrollmentSuccessPage } from './pages/EnrollmentSuccessPage.jsx';
 import { CreatePasswordPage } from './pages/CreatePasswordPage.jsx';
 import { CheckoutSmsPage } from './pages/CheckoutSmsPage.jsx';
@@ -94,10 +94,10 @@ export function App() {
             }
           />
           <Route
-            path="/coupon-enrollment"
+            path="/savings-enrollment-hipaa-authorization-combined"
             element={
               <div style={{ width: '100%', maxWidth: WELCOME_MAX_WIDTH, margin: '0 auto', background: '#fff' }}>
-                <CouponEnrollmentPage />
+                <SavingsHipaaAuthorizationPage />
               </div>
             }
           />

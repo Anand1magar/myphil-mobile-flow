@@ -10,7 +10,7 @@ const PATIENT_NAME = 'Patricia';
 
 const stopToggle = (e) => e.stopPropagation();
 
-export function CouponEnrollmentPage() {
+export function SavingsHipaaAuthorizationPage() {
   const navigate = useNavigate();
   const [eligibilityAgreed, setEligibilityAgreed] = useState(true);
   const [hipaaAgreed, setHipaaAgreed] = useState(true);
@@ -20,7 +20,7 @@ export function CouponEnrollmentPage() {
     <div style={{ width: '100%', minHeight: '100vh', boxSizing: 'border-box', background: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'var(--font-body)' }}>
       <MyPhilHeader />
 
-      <div style={{ width: '100%', flex: 1, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 20, padding: '20px 16px' }}>
+      <div style={{ width: '100%', flex: 1, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 20, padding: '20px 16px 80px' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           <h1 style={{ fontSize: 26, fontWeight: 700, lineHeight: '36px', color: 'var(--pitch)', margin: 0 }}>Great News, Great Savings!</h1>
           <p style={{ fontSize: 16, lineHeight: '24px', color: 'var(--pitch)', margin: 0 }}>Agree to the terms and conditions below for potential savings.</p>

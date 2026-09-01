@@ -44,7 +44,7 @@ function NoteField({ value, onChange }) {
 export function ContactInformationPage() {
   const navigate = useNavigate();
   const [notifyByText, setNotifyByText] = useState(true);
-  const [notifyByEmail, setNotifyByEmail] = useState(true);
+  const [notifyByEmail, setNotifyByEmail] = useState(false);
   const [email, setEmail] = useState('');
   const [noKnownAllergies, setNoKnownAllergies] = useState(true);
   const [allergies, setAllergies] = useState([]);
