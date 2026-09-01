@@ -1,10 +1,12 @@
 {
   "name": "my-phil-experience-mobile",
   "private": true,
-  "description": "Repo entry point - dev/build/preview run the My Phil Experience mobile flow (myphil-base-flow).",
+  "description": "Repo entry point - dev/build/preview run the base flow (projects/myphil-base-flow). White-label brands live alongside it in projects/ (see projects/README.md).",
   "scripts": {
-    "dev": "cd myphil-base-flow && npm install && npm run dev",
-    "build": "cd myphil-base-flow && npm install && npm run build",
-    "preview": "cd myphil-base-flow && npm run preview"
+    "dev": "cd projects/myphil-base-flow && npm install && npm run dev",
+    "build": "cd projects/myphil-base-flow && npm install && npm run build",
+    "preview": "cd projects/myphil-base-flow && npm run preview",
+    "dev:axesome": "cd projects/Axesome && npm install && npm run dev",
+    "build:axesome": "cd projects/Axesome && npm install && npm run build"
   }
 }
