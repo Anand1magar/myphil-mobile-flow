@@ -1,0 +1,11 @@
+{
+  "name": "my-phil-experience-mobile",
+  "private": true,
+  "description": "Repo entry point — dev/build/preview run the My Phil Experience mobile flow (myphil-base-flow).",
+  "scripts": {
+    "dev": "cd myphil-base-flow && npm run dev",
+    "build": "cd myphil-base-flow && npm run build",
+    "preview": "cd myphil-base-flow && npm run preview",
+    "install:app": "cd myphil-base-flow && npm install"
+  }
+}

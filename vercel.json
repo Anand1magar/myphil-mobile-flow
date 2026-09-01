@@ -1,0 +1,7 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "cd myphil-base-flow && npm install",
+  "buildCommand": "cd myphil-base-flow && npm run build",
+  "outputDirectory": "myphil-base-flow/dist",
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}
