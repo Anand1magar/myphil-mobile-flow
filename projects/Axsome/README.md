@@ -1,4 +1,4 @@
-# Axesome — white-label enrollment flow
+# Axsome — white-label enrollment flow
 
 A branded copy of `../myphil-base-flow` (the base flow / source of truth).
 Same screens, layout, and interactions — only the brand identity and the
@@ -30,7 +30,7 @@ Everything below lives inside this folder; the base flow is untouched.
 | Piece | Where |
 |---|---|
 | Colors (`--sky` family = `#2F1147`, secondary `#A82B91`) | `src/brand-theme.css` (loaded after `@ds/styles.css` in `src/main.jsx`) |
-| Logo + header tagline color | `src/assets/axesome-logo.svg`, `src/components/BrandHeader.jsx` |
+| Logo + header tagline color | `src/assets/axsome-logo.png`, `src/components/BrandHeader.jsx` |
 | Drug name → "SYMBRAVO® (meloxicam and rizatriptan)" | edited directly in the screen files |
 | Pharmacy name → "Axsome OnMySide Direct" | `src/pages/WelcomePage.jsx` |
 | Account label → "Axsome OnMySide account" | `WelcomePage.jsx`, `CreatePasswordPage.jsx` |

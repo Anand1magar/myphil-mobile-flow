@@ -3,7 +3,7 @@
 ```
 projects/
 ├── myphil-base-flow/   ← the base flow. SOURCE OF TRUTH. Do not brand this folder.
-└── Axesome/            ← white-label #1: a full copy of myphil-base-flow, re-branded
+└── Axsome/             ← white-label #1: a full copy of myphil-base-flow, re-branded
 ```
 
 Each brand is a **complete standalone copy** of `myphil-base-flow` with its own
@@ -42,4 +42,4 @@ only brand-owned CSS variables are overridden per brand.
 
 3. `npm install && npm run dev`, walk the flow, done.
 
-See `projects/Axesome/README.md` for a worked example.
+See `projects/Axsome/README.md` for a worked example.

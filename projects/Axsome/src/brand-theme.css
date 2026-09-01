@@ -1,4 +1,4 @@
-/* Axesome white-label theme overrides.
+/* Axsome white-label theme overrides.
    Loaded after @ds/styles.css in main.jsx, so these :root values win over the
    PhilRx design-system defaults. Only the brand-owned tokens are overridden —
    everything else stays on PhilRx defaults per the brand spec. */

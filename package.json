@@ -6,7 +6,7 @@
     "dev": "cd projects/myphil-base-flow && npm install && npm run dev",
     "build": "cd projects/myphil-base-flow && npm install && npm run build",
     "preview": "cd projects/myphil-base-flow && npm run preview",
-    "dev:axesome": "cd projects/Axesome && npm install && npm run dev",
-    "build:axesome": "cd projects/Axesome && npm install && npm run build"
+    "dev:axsome": "cd projects/Axsome && npm install && npm run dev",
+    "build:axsome": "cd projects/Axsome && npm install && npm run build"
   }
 }

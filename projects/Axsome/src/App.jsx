@@ -9,7 +9,7 @@ import { CreatePasswordPage } from './pages/CreatePasswordPage.jsx';
 
 const WELCOME_MAX_WIDTH = 600;
 
-// Axesome patient enrollment flow — 6 screens, in order:
+// Axsome patient enrollment flow — 6 screens, in order:
 //   /welcome → /insurance-details → /contact-information → /savings-hipaa
 //   → /enrollment-success → /create-password
 function Screen({ children }) {
