@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@ds/components/forms/Button/Button.jsx';
 import { Icon } from '@ds/assets/icons/Icon.jsx';
 import { PhilRxAppHeader } from '../components/PhilRxAppHeader.jsx';
-import { PhilRxFooter } from '../components/PhilRxFooter.jsx';
+import { MyPhilFooter } from '@ds/components/navigation/MyPhilFooter/MyPhilFooter.jsx';
 
 const FAQ_QUESTIONS = [
   'Why do I have a high copay?',
@@ -97,7 +97,7 @@ export function MyPrescriptionsPage() {
         </div>
       </div>
 
-      <PhilRxFooter insuranceNote />
+      <MyPhilFooter insuranceNote />
     </div>
   );
 }

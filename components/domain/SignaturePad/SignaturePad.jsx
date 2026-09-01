@@ -86,9 +86,11 @@ export function SignaturePad({ signed = false, name = '', height = 140 }) {
           <span style={{ position: 'absolute', left: 16, bottom: 32, fontFamily: 'cursive', fontSize: 32, color: 'var(--pitch)', pointerEvents: 'none' }}>{name || 'Signature'}</span>
         )}
       </div>
-      <div style={{ marginTop: 8, display: 'flex', justifyContent: 'flex-end' }}>
-        <a href="#" onClick={(e) => { e.preventDefault(); clear(); }} style={{ fontSize: 14, color: 'var(--sky)' }}>Clear</a>
-      </div>
+      {hasDrawn && (
+        <div style={{ marginTop: 8, display: 'flex', justifyContent: 'flex-end' }}>
+          <a href="#" onClick={(e) => { e.preventDefault(); clear(); }} style={{ fontSize: 14, color: 'var(--sky)' }}>Clear</a>
+        </div>
+      )}
     </div>
   );
 }

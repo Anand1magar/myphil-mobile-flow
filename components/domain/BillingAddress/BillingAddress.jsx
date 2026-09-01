@@ -1,4 +1,13 @@
 import React, { useState } from 'react';
+import { useFocusRing, fieldRing } from '../../forms/useFocusRing.js';
+function Field({ placeholder }) {
+  const { focused, focusProps } = useFocusRing();
+  return (
+    <div style={{ height: 48, borderRadius: 4, boxShadow: fieldRing(focused), display: 'flex', alignItems: 'center', padding: '0 16px' }}>
+      <input placeholder={placeholder} {...focusProps} style={{ border: 'none', outline: 'none', width: '100%', fontFamily: 'inherit', fontSize: 16 }} />
+    </div>
+  );
+}
 export function BillingAddress({ sameAsShipping = true }) {
   const [same, setSame] = useState(sameAsShipping);
   return (
@@ -11,9 +20,7 @@ export function BillingAddress({ sameAsShipping = true }) {
         <span style={{ fontSize: 16, color: 'var(--pitch)' }}>Same as shipping address</span>
       </label>
       {!same && ['Street address','City','ZIP code'].map(l => (
-        <div key={l} style={{ height: 48, borderRadius: 4, boxShadow: '0 0 0 1px var(--pitch)', display: 'flex', alignItems: 'center', padding: '0 16px' }}>
-          <input placeholder={l} style={{ border: 'none', outline: 'none', width: '100%', fontFamily: 'inherit', fontSize: 16 }} />
-        </div>
+        <Field key={l} placeholder={l} />
       ))}
     </div>
   );

@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@ds/components/forms/Button/Button.jsx';
 import { PhilRxAppHeader } from '../components/PhilRxAppHeader.jsx';
-import { PhilRxFooter } from '../components/PhilRxFooter.jsx';
+import { MyPhilFooter } from '@ds/components/navigation/MyPhilFooter/MyPhilFooter.jsx';
 
 const SHIPPING_ADDRESS = { line1: '123 Main Street, Apt. 5', line2: 'San Francisco, CA 44512' };
 
@@ -40,7 +40,7 @@ export function OrderConfirmationPage() {
         </div>
       </div>
 
-      <PhilRxFooter insuranceNote />
+      <MyPhilFooter insuranceNote />
     </div>
   );
 }

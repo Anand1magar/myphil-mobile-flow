@@ -7,7 +7,7 @@ export function Button({ hierarchy = 'primary', size = 'md', disabled = false, i
     primary: disabled ? { background: 'var(--sky-disabled)', color: '#fff', boxShadow: 'inset 0 0 0 1px var(--sky-disabled)' } : { background: 'var(--sky)', color: '#fff', boxShadow: 'inset 0 0 0 1px var(--sky)' },
     secondary: disabled ? { background: 'transparent', color: 'var(--sky-disabled)', boxShadow: 'inset 0 0 0 1px var(--sky-disabled)' } : { background: 'transparent', color: 'var(--sky)', boxShadow: 'inset 0 0 0 1px var(--sky)' },
     tertiary: disabled ? { background: '#fff', color: 'var(--fade)', boxShadow: 'inset 0 0 0 1px var(--fade)' } : { background: '#fff', color: 'var(--gunmetal)', boxShadow: 'inset 0 0 0 1px var(--gunmetal)' },
-    link: { background: 'transparent', color: disabled ? 'var(--sky-disabled)' : 'var(--sky)', textDecoration: 'underline', fontWeight: 400, minWidth: 'auto', padding: 0, height: 24 },
+    link: { background: 'transparent', color: disabled ? 'var(--sky-disabled)' : 'var(--sky)', textDecoration: 'underline', fontWeight: 400, minWidth: 'auto', maxWidth: 'none', justifyContent: 'flex-start', padding: 0, height: 24 },
   };
   const hoverBg = { primary: 'var(--sky-hover)' };
   const [hover, setHover] = React.useState(false);

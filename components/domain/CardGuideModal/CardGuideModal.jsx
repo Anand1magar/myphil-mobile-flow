@@ -1,6 +1,12 @@
 import React from 'react';
 import { Modal } from '../../feedback/Modal/Modal.jsx';
 import { Icon } from '../../../assets/icons/Icon.jsx';
+import pharmacyExample1 from '../../../assets/images/card-guide/pharmacy-example-1.png';
+import pharmacyExample2 from '../../../assets/images/card-guide/pharmacy-example-2.png';
+import pharmacyExample3 from '../../../assets/images/card-guide/pharmacy-example-3.png';
+import medicaidExample1 from '../../../assets/images/card-guide/medicaid-example-1.png';
+import medicaidExample2 from '../../../assets/images/card-guide/medicaid-example-2.png';
+import discountExample1 from '../../../assets/images/card-guide/discount-example-1.png';
 
 const CARD_TYPES = [
   {
@@ -26,22 +32,46 @@ const CARD_TYPES = [
 ];
 
 const EXAMPLE_GROUPS = [
-  { accepted: true, label: 'Prescription/Pharmacy Card Examples:', cards: ['BlueCross BlueShield', 'Express Scripts', 'CVS Caremark'] },
-  { accepted: true, label: 'Medicaid Card Example:', cards: ['Florida Medicaid'] },
-  { accepted: false, label: 'Medical Card Example:', cards: ['Aetna'] },
-  { accepted: false, label: 'Discount Card Example:', cards: ['GoodRx'] },
+  {
+    accepted: true,
+    label: 'Prescription/Pharmacy Card Examples:',
+    cards: [
+      { name: 'Pharmacy card example 1', image: pharmacyExample1 },
+      { name: 'Pharmacy card example 2', image: pharmacyExample2 },
+      { name: 'Pharmacy card example 3', image: pharmacyExample3 },
+    ],
+  },
+  {
+    accepted: true,
+    label: 'Medicaid Card Example:',
+    cards: [
+      { name: 'Medicaid card example 1', image: medicaidExample1 },
+    ],
+  },
+  {
+    accepted: false,
+    label: 'Medical Card Example:',
+    cards: [{ name: 'Medical card example', image: medicaidExample2 }],
+  },
+  {
+    accepted: false,
+    label: 'Discount Card Example:',
+    cards: [{ name: 'Discount card example', image: discountExample1 }],
+  },
 ];
 
 function StatusIcon({ accepted }) {
   return accepted
-    ? <Icon name="CheckCircleStyleFilled" size={20} style={{ color: 'var(--success)', flexShrink: 0 }} />
+    ? <Icon name="CheckCircleStyleFilled" size={20} style={{ color: 'var(--teal-bright)', flexShrink: 0 }} />
     : <Icon name="CancelStyleFilled" size={20} style={{ color: 'var(--ruby)', flexShrink: 0 }} />;
 }
 
-function PlaceholderCard({ name }) {
+function PlaceholderCard({ name, image }) {
   return (
-    <div style={{ border: '1px solid var(--fade)', borderRadius: 8, background: 'var(--paper)', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 100, boxSizing: 'border-box', padding: 16 }}>
-      <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--gunmetal)', textAlign: 'center' }}>{name}</span>
+    <div style={{ border: '1px solid var(--fade)', borderRadius: 8, background: image ? 'var(--pure)' : 'var(--paper)', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: image ? 0 : 100, boxSizing: 'border-box', padding: image ? 8 : 16, overflow: 'hidden' }}>
+      {image
+        ? <img src={image} alt={name} style={{ maxWidth: '100%', height: 'auto', borderRadius: 4, display: 'block' }} />
+        : <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--gunmetal)', textAlign: 'center' }}>{name}</span>}
     </div>
   );
 }
@@ -86,7 +116,11 @@ export function CardGuideModal({ open, onClose }) {
               <span style={{ fontSize: 16, fontWeight: 700, color: 'var(--pitch)' }}>{group.label}</span>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              {group.cards.map((name) => <PlaceholderCard key={name} name={name} />)}
+              {group.cards.map((card) => {
+                const name = typeof card === 'string' ? card : card.name;
+                const image = typeof card === 'string' ? null : card.image;
+                return <PlaceholderCard key={name} name={name} image={image} />;
+              })}
             </div>
           </div>
         ))}

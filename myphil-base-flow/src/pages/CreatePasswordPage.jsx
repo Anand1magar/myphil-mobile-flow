@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@ds/components/forms/Button/Button.jsx';
 import { TextInput } from '@ds/components/forms/TextInput/TextInput.jsx';
 import { Checkbox } from '@ds/components/forms/Checkbox/Checkbox.jsx';
-import { PhilRxHeader } from '../components/PhilRxHeader.jsx';
-import { PhilRxFooter } from '../components/PhilRxFooter.jsx';
+import { MyPhilHeader } from '@ds/components/navigation/MyPhilHeader/MyPhilHeader.jsx';
+import { MyPhilFooter } from '@ds/components/navigation/MyPhilFooter/MyPhilFooter.jsx';
 
 export function CreatePasswordPage() {
   const navigate = useNavigate();
@@ -14,9 +14,9 @@ export function CreatePasswordPage() {
 
   return (
     <div style={{ width: '100%', minHeight: '100vh', boxSizing: 'border-box', background: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'var(--font-body)' }}>
-      <PhilRxHeader />
+      <MyPhilHeader />
 
-      <div style={{ width: '100%', flex: 1, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 20, padding: '20px 16px' }}>
+      <div style={{ width: '100%', flex: 1, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 20, padding: '20px 16px 120px' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           <h1 style={{ fontSize: 26, fontWeight: 700, lineHeight: '36px', color: 'var(--pitch)', margin: 0 }}>Create Password</h1>
           <p style={{ fontSize: 16, lineHeight: '24px', color: 'var(--pitch)', margin: 0 }}>
@@ -57,7 +57,7 @@ export function CreatePasswordPage() {
         </div>
       </div>
 
-      <PhilRxFooter />
+      <MyPhilFooter />
     </div>
   );
 }

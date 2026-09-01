@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PhilRxHeader } from '../components/PhilRxHeader.jsx';
-import { PhilRxFooter } from '../components/PhilRxFooter.jsx';
+import { MyPhilHeader } from '@ds/components/navigation/MyPhilHeader/MyPhilHeader.jsx';
+import { MyPhilFooter } from '@ds/components/navigation/MyPhilFooter/MyPhilFooter.jsx';
 import cameraUploadIcon from '@ds/assets/icons/camera-upload.svg';
 
 export function InsuranceCardUploadPage() {
@@ -9,15 +9,15 @@ export function InsuranceCardUploadPage() {
 
   return (
     <div style={{ width: '100%', minHeight: '100vh', boxSizing: 'border-box', background: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'var(--font-body)' }}>
-      <PhilRxHeader />
+      <MyPhilHeader />
 
-      <div style={{ width: '100%', flex: 1, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 20, padding: '20px 16px' }}>
+      <div style={{ width: '100%', flex: 1, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 20, padding: '20px 16px 120px' }}>
         <h1 style={{ fontSize: 26, fontWeight: 700, lineHeight: '36px', color: 'var(--pitch)', margin: 0 }}>
           Upload your prescription insurance card
         </h1>
 
         <p style={{ fontSize: 16, lineHeight: '24px', color: 'var(--pitch)', margin: 0 }}>
-          Make sure the <strong>Rx BIN</strong> is clearly visible. <a href="#" style={{ color: 'var(--sky)' }}>Which card do I need?</a>
+          Make sure the <strong>Rx BIN</strong> is clearly visible. <a href="#" style={{ color: 'var(--sky)', textDecoration: 'none' }}>Which card do I need?</a>
         </p>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
@@ -36,7 +36,7 @@ export function InsuranceCardUploadPage() {
               </div>
             </button>
 
-            <a href="#" style={{ fontSize: 16, lineHeight: '24px', color: 'var(--sky)', textAlign: 'center' }}>I don&rsquo;t have prescription insurance</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); navigate('/contact-information'); }} style={{ fontSize: 16, lineHeight: '24px', color: 'var(--sky)', textAlign: 'center', textDecoration: 'underline solid' }}>I don&rsquo;t have prescription insurance</a>
           </div>
 
           <div style={{ borderTop: '1px solid var(--fade)' }} />
@@ -47,7 +47,7 @@ export function InsuranceCardUploadPage() {
         </div>
       </div>
 
-      <PhilRxFooter />
+      <MyPhilFooter />
     </div>
   );
 }

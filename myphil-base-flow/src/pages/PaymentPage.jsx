@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@ds/components/forms/Button/Button.jsx';
 import { Icon } from '@ds/assets/icons/Icon.jsx';
 import { PhilRxAppHeader } from '../components/PhilRxAppHeader.jsx';
-import { PhilRxFooter } from '../components/PhilRxFooter.jsx';
+import { MyPhilFooter } from '@ds/components/navigation/MyPhilFooter/MyPhilFooter.jsx';
 import { PaymentAccordions } from '../components/PaymentAccordions.jsx';
 
 export function PaymentPage() {
@@ -59,7 +59,7 @@ export function PaymentPage() {
         <PaymentAccordions />
       </div>
 
-      <PhilRxFooter insuranceNote />
+      <MyPhilFooter insuranceNote />
     </div>
   );
 }

@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@ds/components/forms/Button/Button.jsx';
 import { PhilRxAppHeader } from '../components/PhilRxAppHeader.jsx';
-import { PhilRxFooter } from '../components/PhilRxFooter.jsx';
+import { MyPhilFooter } from '@ds/components/navigation/MyPhilFooter/MyPhilFooter.jsx';
 
 const CODE_LENGTH = 6;
 const BORDER_COLOR = { default: 'var(--pitch)', focused: 'var(--sky)', error: 'var(--ruby)', filled: 'var(--pitch)' };
@@ -78,7 +78,7 @@ export function OtpVerifyPage() {
                     height: 48,
                     border: 'none',
                     borderRadius: 4,
-                    boxShadow: `0 0 0 1px ${BORDER_COLOR[effState]}`,
+                    boxShadow: `0 0 0 ${focusedIndex === index ? 2 : 1}px ${BORDER_COLOR[effState]}`,
                     background: boxState === 'filled' ? 'var(--paper)' : 'transparent',
                     textAlign: 'center',
                     fontFamily: 'var(--font-body)',
@@ -99,7 +99,7 @@ export function OtpVerifyPage() {
         </div>
       </div>
 
-      <PhilRxFooter />
+      <MyPhilFooter />
     </div>
   );
 }

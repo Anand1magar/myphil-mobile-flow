@@ -4,7 +4,7 @@ import { Button } from '@ds/components/forms/Button/Button.jsx';
 import { TextInput } from '@ds/components/forms/TextInput/TextInput.jsx';
 import { Checkbox } from '@ds/components/forms/Checkbox/Checkbox.jsx';
 import { PhilRxAppHeader } from '../components/PhilRxAppHeader.jsx';
-import { PhilRxFooter } from '../components/PhilRxFooter.jsx';
+import { MyPhilFooter } from '@ds/components/navigation/MyPhilFooter/MyPhilFooter.jsx';
 
 export function LoginPage() {
   const navigate = useNavigate();
@@ -57,7 +57,7 @@ export function LoginPage() {
       </div>
 
       <div style={{ width: '100%', marginTop: 126 }}>
-        <PhilRxFooter />
+        <MyPhilFooter />
       </div>
     </div>
   );

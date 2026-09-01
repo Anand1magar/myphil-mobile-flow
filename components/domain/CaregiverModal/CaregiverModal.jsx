@@ -11,7 +11,7 @@ export function CaregiverModal({ open, onClose, onConfirm, patientName = 'the pa
   return (
     <Modal open={open} onClose={onClose} size="full">
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', width: '100%', fontFamily: 'var(--font-body)' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 21 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
           <h2 style={{ fontWeight: 700, fontSize: 26, lineHeight: '36px', color: 'var(--pitch)', margin: 0 }}>
             Caregiver info for minors (under 18 years)
           </h2>
@@ -19,11 +19,11 @@ export function CaregiverModal({ open, onClose, onConfirm, patientName = 'the pa
             Since {patientName} is a minor, an adult caregiver must complete the enrollment. Are you {patientName}'s legal caregiver?
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-            <Radio name="isCaregiver" label="Yes, I am" checked={isCaregiver === true} onChange={() => setIsCaregiver(true)} />
+            <Radio borderless name="isCaregiver" label="Yes, I am" checked={isCaregiver === true} onChange={() => setIsCaregiver(true)} />
             {isCaregiver === true && (
               <TextInput placeholder="Name of caregiver" value={caregiverName} onChange={e => setCaregiverName(e.target.value)} />
             )}
-            <Radio name="isCaregiver" label="No, I am not" checked={isCaregiver === false} onChange={() => setIsCaregiver(false)} />
+            <Radio borderless name="isCaregiver" label="No, I am not" checked={isCaregiver === false} onChange={() => setIsCaregiver(false)} />
           </div>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>

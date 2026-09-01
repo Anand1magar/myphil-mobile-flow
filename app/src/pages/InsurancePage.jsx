@@ -19,12 +19,14 @@ export function InsurancePage() {
       </p>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         <Radio
+          borderless
           name="hasInsurance"
           label="Yes, I have insurance"
           checked={choice === true}
           onChange={() => updateData({ hasInsurance: true })}
         />
         <Radio
+          borderless
           name="hasInsurance"
           label="No, I don't have insurance"
           checked={choice === false}

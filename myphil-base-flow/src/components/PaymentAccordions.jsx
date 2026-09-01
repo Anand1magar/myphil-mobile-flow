@@ -172,6 +172,7 @@ export function PaymentAccordions() {
                               <div style={{ display: 'flex', flexDirection: 'column', gap: 16, width: '100%' }}>
                                 <p style={{ margin: 0, fontSize: 14, fontWeight: 700, color: 'var(--pitch)' }}>Billing address</p>
                                 <Radio
+                                  borderless
                                   name="billing-address"
                                   checked={billingAddress === 'same'}
                                   onChange={() => setBillingAddress('same')}
@@ -187,6 +188,7 @@ export function PaymentAccordions() {
                                   }
                                 />
                                 <Radio
+                                  borderless
                                   name="billing-address"
                                   checked={billingAddress === 'new'}
                                   onChange={() => setBillingAddress('new')}

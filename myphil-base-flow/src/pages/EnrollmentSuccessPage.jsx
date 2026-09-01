@@ -1,17 +1,17 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@ds/components/forms/Button/Button.jsx';
-import { PhilRxHeader } from '../components/PhilRxHeader.jsx';
-import { PhilRxFooter } from '../components/PhilRxFooter.jsx';
+import { MyPhilHeader } from '@ds/components/navigation/MyPhilHeader/MyPhilHeader.jsx';
+import { MyPhilFooter } from '@ds/components/navigation/MyPhilFooter/MyPhilFooter.jsx';
 import shieldHeartIcon from '@ds/assets/icons/shield-heart.svg';
 
 export function EnrollmentSuccessPage() {
   const navigate = useNavigate();
   return (
     <div style={{ width: '100%', minHeight: '100vh', boxSizing: 'border-box', background: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'var(--font-body)' }}>
-      <PhilRxHeader />
+      <MyPhilHeader />
 
-      <div style={{ width: '100%', flex: 1, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 20, padding: '20px 16px' }}>
+      <div style={{ width: '100%', flex: 1, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 20, padding: '20px 16px 120px' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           <h1 style={{ fontSize: 26, fontWeight: 700, lineHeight: '36px', color: 'var(--pitch)', margin: 0 }}>
             You did it! We&rsquo;re working on getting your best Drugname (chemical compositions) (volume) price!
@@ -40,7 +40,7 @@ export function EnrollmentSuccessPage() {
         </div>
       </div>
 
-      <PhilRxFooter />
+      <MyPhilFooter />
     </div>
   );
 }

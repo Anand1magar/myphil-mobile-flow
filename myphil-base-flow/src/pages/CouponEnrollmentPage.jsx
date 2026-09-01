@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@ds/components/forms/Button/Button.jsx';
 import { Checkbox } from '@ds/components/forms/Checkbox/Checkbox.jsx';
 import { SignaturePad } from '@ds/components/domain/SignaturePad/SignaturePad.jsx';
-import { PhilRxHeader } from '../components/PhilRxHeader.jsx';
-import { PhilRxFooter } from '../components/PhilRxFooter.jsx';
+import { MyPhilHeader } from '@ds/components/navigation/MyPhilHeader/MyPhilHeader.jsx';
+import { MyPhilFooter } from '@ds/components/navigation/MyPhilFooter/MyPhilFooter.jsx';
 
 const PATIENT_NAME = 'Patricia';
 
@@ -18,7 +18,7 @@ export function CouponEnrollmentPage() {
 
   return (
     <div style={{ width: '100%', minHeight: '100vh', boxSizing: 'border-box', background: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'var(--font-body)' }}>
-      <PhilRxHeader />
+      <MyPhilHeader />
 
       <div style={{ width: '100%', flex: 1, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 20, padding: '20px 16px' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -74,7 +74,7 @@ export function CouponEnrollmentPage() {
         </div>
       </div>
 
-      <PhilRxFooter />
+      <MyPhilFooter />
     </div>
   );
 }

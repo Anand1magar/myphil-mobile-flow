@@ -5,8 +5,8 @@ import { TextInput } from '@ds/components/forms/TextInput/TextInput.jsx';
 import { NextSteps } from '@ds/components/domain/NextSteps/NextSteps.jsx';
 import { CaregiverModal } from '@ds/components/domain/CaregiverModal/CaregiverModal.jsx';
 import { Icon } from '@ds/assets/icons/Icon.jsx';
-import { PhilRxHeader } from '../components/PhilRxHeader.jsx';
-import { PhilRxFooter } from '../components/PhilRxFooter.jsx';
+import { MyPhilHeader } from '@ds/components/navigation/MyPhilHeader/MyPhilHeader.jsx';
+import { MyPhilFooter } from '@ds/components/navigation/MyPhilFooter/MyPhilFooter.jsx';
 import trustpilotRating from '@ds/assets/images/trustpilot-rating.png';
 import bbbAccredited from '@ds/assets/images/bbb-accredited-business.jpg';
 import soc2Badge from '@ds/assets/images/soc2-badge.png';
@@ -47,7 +47,7 @@ export function WelcomePage() {
 
   return (
     <div style={{ width: '100%', background: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'var(--font-body)' }}>
-      <PhilRxHeader />
+      <MyPhilHeader />
 
       <div style={{ width: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 28, padding: '20px 16px' }}>
         <h1 style={{ fontSize: 26, fontWeight: 700, lineHeight: '36px', color: 'var(--pitch)', margin: 0 }}>Welcome, {PATIENT_NAME}!</h1>
@@ -99,7 +99,7 @@ export function WelcomePage() {
       <div style={{ width: '100%', background: '#f4f4f4', padding: 16, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 24 }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           <p style={{ fontSize: 18, fontWeight: 700, color: 'var(--pitch)', margin: 0 }}>Frequently asked questions</p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {FAQ_LINKS.map((q) => (
               <p key={q} style={{ fontSize: 16, color: 'var(--sky)', margin: 0 }}>{q} &gt;</p>
             ))}
@@ -134,7 +134,7 @@ export function WelcomePage() {
         </div>
       </div>
 
-      <PhilRxFooter />
+      <MyPhilFooter />
 
       <CaregiverModal
         open={showCaregiverModal}

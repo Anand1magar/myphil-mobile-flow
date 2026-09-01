@@ -1,4 +1,11 @@
 import React from 'react';
+import { useFocusRing } from '../useFocusRing.js';
+function Cell({ border }) {
+  const { focused, focusProps } = useFocusRing();
+  return (
+    <input maxLength={1} {...focusProps} style={{ width: 40, height: 48, borderRadius: 4, border: 'none', boxShadow: focused ? '0 0 0 2px var(--sky)' : '0 0 0 1px ' + border, textAlign: 'center', fontFamily: 'inherit', fontSize: 18, color: 'var(--pitch)', outline: 'none' }} />
+  );
+}
 export function InputSpecial({ label = 'Verification code', length = 6, state = 'default' }) {
   const border = { default: 'var(--pitch)', error: 'var(--ruby)', verified: 'var(--foliage)', filled: 'var(--pitch)' }[state];
   return (
@@ -6,7 +13,7 @@ export function InputSpecial({ label = 'Verification code', length = 6, state = 
       <span style={{ fontWeight: 700, fontSize: 18, lineHeight: '28px', color: 'var(--pitch)' }}>{label}</span>
       <div style={{ display: 'flex', gap: 8 }}>
         {Array.from({ length }).map((_, i) => (
-          <input key={i} maxLength={1} style={{ width: 40, height: 48, borderRadius: 4, border: 'none', boxShadow: '0 0 0 1px ' + border, textAlign: 'center', fontFamily: 'inherit', fontSize: 18, color: 'var(--pitch)', outline: 'none' }} />
+          <Cell key={i} border={border} />
         ))}
       </div>
     </div>

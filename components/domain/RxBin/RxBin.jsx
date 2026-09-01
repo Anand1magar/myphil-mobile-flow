@@ -1,10 +1,12 @@
 import React from 'react';
+import { useFocusRing, fieldRing } from '../../forms/useFocusRing.js';
 function Field({ label, placeholder }) {
+  const { focused, focusProps } = useFocusRing();
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
       <span style={{ fontWeight: 700, fontSize: 18, lineHeight: '28px', color: 'var(--pitch)' }}>{label}</span>
-      <div style={{ height: 48, borderRadius: 4, boxShadow: '0 0 0 1px var(--pitch)', display: 'flex', alignItems: 'center', padding: '0 16px' }}>
-        <input placeholder={placeholder} style={{ border: 'none', outline: 'none', width: '100%', fontFamily: 'var(--font-body)', fontSize: 18 }} />
+      <div style={{ height: 48, borderRadius: 4, boxShadow: fieldRing(focused), display: 'flex', alignItems: 'center', padding: '0 16px' }}>
+        <input placeholder={placeholder} {...focusProps} style={{ border: 'none', outline: 'none', width: '100%', fontFamily: 'var(--font-body)', fontSize: 18 }} />
       </div>
     </div>
   );

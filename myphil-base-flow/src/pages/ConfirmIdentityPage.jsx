@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@ds/components/forms/Button/Button.jsx';
 import { TextInput } from '@ds/components/forms/TextInput/TextInput.jsx';
 import { PhilRxAppHeader } from '../components/PhilRxAppHeader.jsx';
-import { PhilRxFooter } from '../components/PhilRxFooter.jsx';
+import { MyPhilFooter } from '@ds/components/navigation/MyPhilFooter/MyPhilFooter.jsx';
 
 export function ConfirmIdentityPage() {
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ export function ConfirmIdentityPage() {
         <Button hierarchy="primary" fullWidth onClick={() => navigate('/otp-delivery')}>Confirm</Button>
       </div>
 
-      <PhilRxFooter />
+      <MyPhilFooter />
     </div>
   );
 }

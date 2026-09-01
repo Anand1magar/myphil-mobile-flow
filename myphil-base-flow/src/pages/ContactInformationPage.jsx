@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@ds/components/forms/Button/Button.jsx';
 import { TextInput } from '@ds/components/forms/TextInput/TextInput.jsx';
 import { Checkbox } from '@ds/components/forms/Checkbox/Checkbox.jsx';
-import { PhilRxHeader } from '../components/PhilRxHeader.jsx';
-import { PhilRxFooter } from '../components/PhilRxFooter.jsx';
+import { MyPhilHeader } from '@ds/components/navigation/MyPhilHeader/MyPhilHeader.jsx';
+import { MyPhilFooter } from '@ds/components/navigation/MyPhilFooter/MyPhilFooter.jsx';
 
 const ADDRESS = { line1: '123 Main Street, Apt. 5', line2: 'San Francisco, CA 44512' };
 const ALLERGY_OPTIONS = ['Aspirin', 'Penicillin', 'Insulin', 'NSAIDs', 'Morphin', 'Latex', 'Other'];
@@ -22,12 +22,31 @@ const textareaStyle = {
   outline: 'none',
 };
 
+function NoteField({ value, onChange }) {
+  const [focused, setFocused] = useState(false);
+  return (
+    <textarea
+      rows={3}
+      placeholder="Type here"
+      value={value}
+      onChange={onChange}
+      onFocus={() => setFocused(true)}
+      onBlur={() => setFocused(false)}
+      style={{
+        ...textareaStyle,
+        border: focused ? '1px solid transparent' : textareaStyle.border,
+        boxShadow: focused ? '0 0 0 2px var(--sky)' : undefined,
+      }}
+    />
+  );
+}
+
 export function ContactInformationPage() {
   const navigate = useNavigate();
   const [notifyByText, setNotifyByText] = useState(true);
   const [notifyByEmail, setNotifyByEmail] = useState(true);
   const [email, setEmail] = useState('');
-  const [noKnownAllergies, setNoKnownAllergies] = useState(false);
+  const [noKnownAllergies, setNoKnownAllergies] = useState(true);
   const [allergies, setAllergies] = useState([]);
   const [medicalHistory, setMedicalHistory] = useState('');
   const [currentMedication, setCurrentMedication] = useState('');
@@ -38,9 +57,9 @@ export function ContactInformationPage() {
 
   return (
     <div style={{ width: '100%', minHeight: '100vh', boxSizing: 'border-box', background: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'var(--font-body)' }}>
-      <PhilRxHeader />
+      <MyPhilHeader />
 
-      <div style={{ width: '100%', boxSizing: 'border-box', background: 'var(--paper)', padding: '8px 16px', display: 'flex', flexDirection: 'column', gap: 4 }}>
+      <div style={{ width: '100%', boxSizing: 'border-box', background: 'var(--paper)', padding: '8px 32px', display: 'flex', flexDirection: 'column', gap: 4 }}>
         <p style={{ fontSize: 16, fontWeight: 700, lineHeight: '24px', color: 'var(--pitch)', margin: 0 }}>Do you have another insurance?</p>
         <p style={{ fontSize: 16, lineHeight: '24px', color: 'var(--pitch)', margin: 0 }}>
           If you do, please{' '}
@@ -49,7 +68,7 @@ export function ContactInformationPage() {
         </p>
       </div>
 
-      <div style={{ width: '100%', flex: 1, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 20, padding: '20px 16px' }}>
+      <div style={{ width: '100%', flex: 1, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 20, padding: '20px 16px 80px' }}>
         <h1 style={{ fontSize: 26, fontWeight: 700, lineHeight: '36px', color: 'var(--pitch)', margin: 0 }}>Contact Information</h1>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -90,7 +109,7 @@ export function ContactInformationPage() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16, width: '100%' }}>
               <p style={{ fontSize: 18, fontWeight: 700, color: 'var(--pitch)', margin: 0 }}>Allergies</p>
               <div style={{ borderTop: '1px solid var(--fade)' }} />
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                 {ALLERGY_OPTIONS.map((allergy) => (
                   <Checkbox key={allergy} label={allergy} checked={allergies.includes(allergy)} onChange={() => toggleAllergy(allergy)} />
                 ))}
@@ -100,13 +119,13 @@ export function ContactInformationPage() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16, width: '100%' }}>
               <p style={{ fontSize: 18, fontWeight: 700, color: 'var(--pitch)', margin: 0 }}>Medical history</p>
               <div style={{ borderTop: '1px solid var(--fade)' }} />
-              <textarea rows={3} placeholder="Type here" value={medicalHistory} onChange={(e) => setMedicalHistory(e.target.value)} style={textareaStyle} />
+              <NoteField value={medicalHistory} onChange={(e) => setMedicalHistory(e.target.value)} />
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16, width: '100%' }}>
               <p style={{ fontSize: 18, fontWeight: 700, color: 'var(--pitch)', margin: 0 }}>Current medication</p>
               <div style={{ borderTop: '1px solid var(--fade)' }} />
-              <textarea rows={3} placeholder="Type here" value={currentMedication} onChange={(e) => setCurrentMedication(e.target.value)} style={textareaStyle} />
+              <NoteField value={currentMedication} onChange={(e) => setCurrentMedication(e.target.value)} />
             </div>
           </div>
         )}
@@ -119,7 +138,7 @@ export function ContactInformationPage() {
         </p>
       </div>
 
-      <PhilRxFooter />
+      <MyPhilFooter />
     </div>
   );
 }
