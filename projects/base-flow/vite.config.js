@@ -4,12 +4,13 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const repoRoot = path.resolve(__dirname, '../..');
 
 export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@ds': path.resolve(__dirname, '..'),
+      '@ds': repoRoot,
     },
   },
 });
