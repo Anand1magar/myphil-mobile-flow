@@ -94,7 +94,9 @@ export function ContactInformationPage() {
           </div>
         </div>
 
-        <TextInput label="Email" placeholder="Email address" value={email} onChange={(e) => setEmail(e.target.value)} />
+        {notifyByEmail && (
+          <TextInput label="Email" placeholder="Email address" value={email} onChange={(e) => setEmail(e.target.value)} />
+        )}
 
         <div style={{ borderTop: '1px solid var(--fade)' }} />
 
