@@ -23,7 +23,7 @@ Given that, this import builds **one canonical, prop-driven component per real p
 ## Components
 - **Forms:** Button, MDDashButton, TextInput, InputField, InputMyPhil, InputSpecial, FormInput, Checkbox, Radio, Select, Dropdown, DropdownElements, SearchBar, Calendar
 - **Feedback:** ActionBox, Banner, InfoBox, DiscountInfoBox, NoticeInformation, Modal
-- **Data display:** Avatar, StatusBadge, PatientStatus, PartsUpdates, NumberedBullet, Highlight, MiscDashboard
+- **Data display:** Avatar, StatusBadge, PatientStatus, PartsUpdates, NumberedBullet, Highlight, MiscDashboard, Affiliations
 - **Navigation & shell:** Header, MyPhilHeader, HeaderPagination, StatusBar, PhilScreen, Footer, MyPhilFooter, DeviceFrame, Accordion, FaqSection, TabItem, DashboardNavLabels
 - **Enrollment flow molecules:** WelcomeMsg, ConfirmInformation, LastNameDOB, PolicyTrustRatings, InsuranceInfo, InsuranceSelectScreen, InsuranceSelectModal, InsuranceUpload, RxBin, InsuranceReview, CouponEnrollment, SavingsCard, HippaAuth, Authorizations, CarepointSign, CaregiverModal, DrugPrerequisites, SignatureReason, FirstStep, NextSteps, Checklist, ThankyouContent, CTA
 - **Address & delivery:** Address, AddressToggle, BillingAddress, DeliveryInfo, DeliveryConfirmation, DeliveryConfirmationSign, MissingDelivery, PaymentApprovalDelivery, Signature, SignaturePad
