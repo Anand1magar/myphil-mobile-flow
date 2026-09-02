@@ -122,7 +122,7 @@ function FrameToggle({ value, onChange }) {
     transition: 'background .12s, color .12s',
   });
   return (
-    <div style={{ position: 'fixed', top: 12, left: '50%', transform: 'translateX(-50%)', zIndex: 2147483000, display: 'flex', gap: 2, padding: 3, borderRadius: 999, background: '#fff', boxShadow: '0 4px 16px rgba(16,18,22,0.18), 0 0 0 1px rgba(16,18,22,0.06)' }}>
+    <div style={{ position: 'fixed', top: 12, right: 16, zIndex: 2147483000, display: 'flex', gap: 2, padding: 3, borderRadius: 999, background: '#fff', boxShadow: '0 4px 16px rgba(16,18,22,0.18), 0 0 0 1px rgba(16,18,22,0.06)' }}>
       <button type="button" style={seg(value === 'iphone')} onClick={() => onChange('iphone')}>iPhone</button>
       <button type="button" style={seg(value === 'desktop')} onClick={() => onChange('desktop')}>Desktop</button>
     </div>
