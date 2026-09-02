@@ -1,11 +1,15 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 
-// Wraps a whole app so that on a desktop-width viewport (>= BREAKPOINT) it
-// renders inside an iPhone + mobile-Safari mockup — a client opening the link
-// on a laptop sees it as a phone. Below the breakpoint the frame is dropped and
-// the app fills the viewport unchanged. The Safari back/forward buttons drive
-// window.history, which a BrowserRouter app picks up like any browser nav.
-const BREAKPOINT = 1024;
+// Wraps a whole app so that on a computer (mouse/trackpad + a window wider than
+// MIN_WIDTH) it renders inside an iPhone + mobile-Safari mockup — a client
+// opening the link on a laptop sees it as a phone. On a real touch device, or a
+// narrow window, the frame is dropped and the app fills the viewport unchanged.
+// The Safari back/forward buttons drive window.history, which a BrowserRouter
+// app picks up like any browser nav.
+//
+// Override per visit with ?frame=1 (force on) or ?frame=0 (force off).
+const MIN_WIDTH = 800;
+const FRAME_QUERY = '(min-width: ' + MIN_WIDTH + 'px) and (pointer: fine)';
 
 const SCREEN_W = 393;
 const SCREEN_H = 852;
@@ -13,17 +17,28 @@ const BEZEL = 14;
 const FRAME_W = SCREEN_W + BEZEL * 2;
 const FRAME_H = SCREEN_H + BEZEL * 2;
 
-function useIsDesktop() {
-  const [isDesktop, setIsDesktop] = useState(
-    () => typeof window !== 'undefined' && window.matchMedia(`(min-width: ${BREAKPOINT}px)`).matches,
-  );
+function queryOverride() {
+  if (typeof window === 'undefined') return null;
+  const v = new URLSearchParams(window.location.search).get('frame');
+  if (v === '1' || v === 'on' || v === 'true') return true;
+  if (v === '0' || v === 'off' || v === 'false') return false;
+  return null;
+}
+
+function useShowFrame() {
+  const [show, setShow] = useState(() => {
+    const o = queryOverride();
+    if (o !== null) return o;
+    return typeof window !== 'undefined' && window.matchMedia(FRAME_QUERY).matches;
+  });
   useEffect(() => {
-    const mq = window.matchMedia(`(min-width: ${BREAKPOINT}px)`);
-    const onChange = (e) => setIsDesktop(e.matches);
+    if (queryOverride() !== null) return undefined;
+    const mq = window.matchMedia(FRAME_QUERY);
+    const onChange = (e) => setShow(e.matches);
     mq.addEventListener('change', onChange);
     return () => mq.removeEventListener('change', onChange);
   }, []);
-  return isDesktop;
+  return show;
 }
 
 // Scale the frame down so the whole phone is visible on short laptop screens.
@@ -78,10 +93,10 @@ function IOSStatusBar() {
 }
 
 export function DeviceFrame({ children, hostname = 'philrx.com' }) {
-  const isDesktop = useIsDesktop();
-  const scale = useFitScale(isDesktop);
+  const showFrame = useShowFrame();
+  const scale = useFitScale(showFrame);
 
-  if (!isDesktop) {
+  if (!showFrame) {
     return <div style={{ minHeight: '100vh', background: '#f4f4f4', boxSizing: 'border-box' }}>{children}</div>;
   }
 
