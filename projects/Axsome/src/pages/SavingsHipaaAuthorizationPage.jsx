@@ -11,7 +11,7 @@ const stopToggle = (e) => e.stopPropagation();
 export function SavingsHipaaAuthorizationPage() {
   const navigate = useNavigate();
   const [eligibilityAgreed, setEligibilityAgreed] = useState(true);
-  const [hipaaAgreed, setHipaaAgreed] = useState(true);
+  const [hipaaAgreed, setHipaaAgreed] = useState(false);
   const [stayConnected, setStayConnected] = useState(false);
 
   return (
@@ -48,12 +48,14 @@ export function SavingsHipaaAuthorizationPage() {
           }
         />
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-          <p style={{ fontSize: 14, lineHeight: '20px', color: 'var(--gunmetal)', margin: 0 }}>
-            <em>(Required)</em> Draw your signature in the box below
-          </p>
-          <SignaturePad />
-        </div>
+        {hipaaAgreed && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <p style={{ fontSize: 14, lineHeight: '20px', color: 'var(--gunmetal)', margin: 0 }}>
+              <em>(Required)</em> Draw your signature in the box below
+            </p>
+            <SignaturePad />
+          </div>
+        )}
 
         <Checkbox
           checked={stayConnected}
