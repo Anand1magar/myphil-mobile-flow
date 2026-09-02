@@ -7,12 +7,10 @@ import React, { useEffect, useLayoutEffect, useState } from 'react';
 // toggle. The Safari back/forward buttons drive window.history, which a
 // BrowserRouter app picks up like any browser nav.
 //
-// Precedence for whether the frame shows:
-//   1. the toggle (remembered in localStorage)
-//   2. ?frame=1 / ?frame=0 in the URL
-//   3. auto: mouse/trackpad + window >= MIN_WIDTH
+// Below MIN_WIDTH, or on a touch device, there is no frame and no toggle —
+// the app is just the app. Above that on a computer the frame shows by
+// default, and the toggle / ?frame=1 / ?frame=0 can turn it off.
 const MIN_WIDTH = 800;
-const FRAME_MEDIA = `(min-width: ${MIN_WIDTH}px) and (pointer: fine)`;
 const COMPUTER_MEDIA = '(pointer: fine)';
 const STORE_KEY = 'deviceframe:mode'; // 'iphone' | 'desktop'
 
@@ -131,20 +129,26 @@ function FrameToggle({ value, onChange }) {
 
 export function DeviceFrame({ children, hostname = 'philrx.com' }) {
   const isComputer = useMedia(COMPUTER_MEDIA);
-  const autoFrame = useMedia(FRAME_MEDIA);
+  const isWide = useMedia(`(min-width: ${MIN_WIDTH}px)`);
   const [mode, setMode] = useState(readStore); // 'iphone' | 'desktop' | null
 
   const setModePersist = (m) => { setMode(m); writeStore(m); };
 
-  let showFrame;
-  if (mode) showFrame = mode === 'iphone';
-  else {
-    const q = queryOverride();
-    showFrame = q !== null ? q : autoFrame;
+  // At the mobile breakpoint (narrow window or a touch device) there is no
+  // frame and no toggle — the app renders plain, whatever the saved mode says.
+  const canFrame = isComputer && isWide;
+
+  let showFrame = false;
+  if (canFrame) {
+    if (mode) showFrame = mode === 'iphone';
+    else {
+      const q = queryOverride();
+      showFrame = q !== null ? q : true;
+    }
   }
 
   const scale = useFitScale(showFrame);
-  const toggle = isComputer
+  const toggle = canFrame
     ? <FrameToggle value={showFrame ? 'iphone' : 'desktop'} onChange={setModePersist} />
     : null;
 
