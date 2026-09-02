@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { DeviceFrame } from './components/DeviceFrame.jsx';
+import { DeviceFrame } from '@ds/components/navigation/DeviceFrame/DeviceFrame.jsx';
 import { WelcomePage } from './pages/WelcomePage.jsx';
 import { InsuranceDetailsPage } from './pages/InsuranceDetailsPage.jsx';
 import { ContactInformationPage } from './pages/ContactInformationPage.jsx';

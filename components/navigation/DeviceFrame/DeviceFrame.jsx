@@ -1,9 +1,10 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
-// On desktop (>= BREAKPOINT) the whole app renders inside an iPhone + mobile
-// Safari mockup, so a client viewing the link on a laptop sees it as a phone.
-// Below the breakpoint the frame is dropped and the app fills the viewport.
+// Wraps a whole app so that on a desktop-width viewport (>= BREAKPOINT) it
+// renders inside an iPhone + mobile-Safari mockup — a client opening the link
+// on a laptop sees it as a phone. Below the breakpoint the frame is dropped and
+// the app fills the viewport unchanged. The Safari back/forward buttons drive
+// window.history, which a BrowserRouter app picks up like any browser nav.
 const BREAKPOINT = 1024;
 
 const SCREEN_W = 393;
@@ -44,14 +45,13 @@ function useFitScale(enabled) {
 const toolbarIcon = { width: 26, height: 26, flexShrink: 0 };
 
 function SafariToolbar() {
-  const navigate = useNavigate();
   const btn = { background: 'none', border: 'none', padding: 4, cursor: 'pointer', color: 'var(--sky)' };
   return (
     <div style={{ height: 48, flexShrink: 0, background: '#f7f7f8', borderTop: '0.5px solid #cfcfd4', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 22px', color: 'var(--sky)' }}>
-      <button type="button" onClick={() => navigate(-1)} aria-label="Back" style={btn}>
+      <button type="button" onClick={() => window.history.back()} aria-label="Back" style={btn}>
         <svg viewBox="0 0 24 24" style={toolbarIcon} fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M15 5l-7 7 7 7" /></svg>
       </button>
-      <button type="button" onClick={() => navigate(1)} aria-label="Forward" style={btn}>
+      <button type="button" onClick={() => window.history.forward()} aria-label="Forward" style={btn}>
         <svg viewBox="0 0 24 24" style={toolbarIcon} fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M9 5l7 7-7 7" /></svg>
       </button>
       <svg viewBox="0 0 24 24" style={toolbarIcon} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 15V3m0 0L8 7m4-4l4 4" /><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" /></svg>
@@ -77,7 +77,7 @@ function IOSStatusBar() {
   );
 }
 
-export function DeviceFrame({ children, hostname = 'axsome.com' }) {
+export function DeviceFrame({ children, hostname = 'philrx.com' }) {
   const isDesktop = useIsDesktop();
   const scale = useFitScale(isDesktop);
 
