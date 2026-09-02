@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { DeviceFrame } from '@ds/components/navigation/DeviceFrame/DeviceFrame.jsx';
 import { WelcomePage } from './pages/WelcomePage.jsx';
 import { InsuranceDetailsPage } from './pages/InsuranceDetailsPage.jsx';
 import { ContactInformationPage } from './pages/ContactInformationPage.jsx';
@@ -23,7 +24,7 @@ function Screen({ children }) {
 export function App() {
   return (
     <BrowserRouter>
-      <div style={{ minHeight: '100vh', background: '#f4f4f4', padding: 0, boxSizing: 'border-box' }}>
+      <DeviceFrame hostname="axsome.com">
         <Routes>
           <Route path="/" element={<Navigate to="/welcome" replace />} />
           <Route path="/welcome" element={<Screen><WelcomePage /></Screen>} />
@@ -34,7 +35,7 @@ export function App() {
           <Route path="/create-password" element={<Screen><CreatePasswordPage /></Screen>} />
           <Route path="*" element={<Navigate to="/welcome" replace />} />
         </Routes>
-      </div>
+      </DeviceFrame>
     </BrowserRouter>
   );
 }
