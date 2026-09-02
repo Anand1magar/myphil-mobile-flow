@@ -45,7 +45,7 @@ export function PaymentPage() {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16, width: '100%' }}>
-            <Button hierarchy="primary" fullWidth onClick={() => navigate('/payment-offer')}>Next</Button>
+            <Button hierarchy="primary" fullWidth onClick={() => navigate('/second-chance-enrollment')}>Next</Button>
             <Button hierarchy="tertiary" fullWidth>Manage your prescription</Button>
           </div>
 

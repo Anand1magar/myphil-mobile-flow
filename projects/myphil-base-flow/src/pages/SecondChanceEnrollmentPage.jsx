@@ -5,7 +5,7 @@ import { PhilRxAppHeader } from '../components/PhilRxAppHeader.jsx';
 import { MyPhilFooter } from '@ds/components/navigation/MyPhilFooter/MyPhilFooter.jsx';
 import { PaymentAccordions } from '../components/PaymentAccordions.jsx';
 
-export function PaymentOfferPage() {
+export function SecondChanceEnrollmentPage() {
   const [summaryOpen, setSummaryOpen] = useState(true);
   return (
     <div style={{ width: '100%', minHeight: '100vh', boxSizing: 'border-box', background: 'var(--paper)', display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'var(--font-body)' }}>

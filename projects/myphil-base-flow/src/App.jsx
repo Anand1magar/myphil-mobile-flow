@@ -19,7 +19,7 @@ import { OtpDeliveryPage } from './pages/OtpDeliveryPage.jsx';
 import { OtpVerifyPage } from './pages/OtpVerifyPage.jsx';
 import { MyPrescriptionsPage } from './pages/MyPrescriptionsPage.jsx';
 import { PaymentPage } from './pages/PaymentPage.jsx';
-import { PaymentOfferPage } from './pages/PaymentOfferPage.jsx';
+import { SecondChanceEnrollmentPage } from './pages/SecondChanceEnrollmentPage.jsx';
 import { OrderConfirmationPage } from './pages/OrderConfirmationPage.jsx';
 
 const SCREEN_MAX_WIDTH = 600;
@@ -43,7 +43,7 @@ const SCREENS = [
   ['/otp-verify', OtpVerifyPage],
   ['/my-prescriptions', MyPrescriptionsPage],
   ['/payment', PaymentPage],
-  ['/payment-offer', PaymentOfferPage],
+  ['/second-chance-enrollment', SecondChanceEnrollmentPage],
   ['/order-confirmation', OrderConfirmationPage],
 ];
 
