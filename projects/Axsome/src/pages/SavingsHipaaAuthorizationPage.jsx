@@ -6,8 +6,6 @@ import { SignaturePad } from '@ds/components/domain/SignaturePad/SignaturePad.js
 import { BrandHeader as MyPhilHeader } from '../components/BrandHeader.jsx';
 import { MyPhilFooter } from '@ds/components/navigation/MyPhilFooter/MyPhilFooter.jsx';
 
-const PATIENT_NAME = 'Patricia';
-
 const stopToggle = (e) => e.stopPropagation();
 
 export function SavingsHipaaAuthorizationPage() {
@@ -54,7 +52,7 @@ export function SavingsHipaaAuthorizationPage() {
           <p style={{ fontSize: 14, lineHeight: '20px', color: 'var(--gunmetal)', margin: 0 }}>
             <em>(Required)</em> Draw your signature in the box below
           </p>
-          <SignaturePad signed name={PATIENT_NAME} />
+          <SignaturePad />
         </div>
 
         <Checkbox
