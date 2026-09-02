@@ -1,21 +1,38 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 
-// Wraps a whole app so that on a computer (mouse/trackpad + a window wider than
-// MIN_WIDTH) it renders inside an iPhone + mobile-Safari mockup — a client
-// opening the link on a laptop sees it as a phone. On a real touch device, or a
-// narrow window, the frame is dropped and the app fills the viewport unchanged.
-// The Safari back/forward buttons drive window.history, which a BrowserRouter
-// app picks up like any browser nav.
+// Wraps a whole app so that on a computer (mouse/trackpad) it can render inside
+// an iPhone + mobile-Safari mockup — a client opening the link on a laptop sees
+// it as a phone. A toggle at the top switches between "iPhone" and "Desktop"; on
+// a real touch device or a narrow window the frame is off and there is no
+// toggle. The Safari back/forward buttons drive window.history, which a
+// BrowserRouter app picks up like any browser nav.
 //
-// Override per visit with ?frame=1 (force on) or ?frame=0 (force off).
+// Precedence for whether the frame shows:
+//   1. the toggle (remembered in localStorage)
+//   2. ?frame=1 / ?frame=0 in the URL
+//   3. auto: mouse/trackpad + window >= MIN_WIDTH
 const MIN_WIDTH = 800;
-const FRAME_QUERY = '(min-width: ' + MIN_WIDTH + 'px) and (pointer: fine)';
+const FRAME_MEDIA = `(min-width: ${MIN_WIDTH}px) and (pointer: fine)`;
+const COMPUTER_MEDIA = '(pointer: fine)';
+const STORE_KEY = 'deviceframe:mode'; // 'iphone' | 'desktop'
 
 const SCREEN_W = 393;
 const SCREEN_H = 852;
 const BEZEL = 14;
 const FRAME_W = SCREEN_W + BEZEL * 2;
 const FRAME_H = SCREEN_H + BEZEL * 2;
+
+function readStore() {
+  try {
+    const v = localStorage.getItem(STORE_KEY);
+    return v === 'iphone' || v === 'desktop' ? v : null;
+  } catch {
+    return null;
+  }
+}
+function writeStore(v) {
+  try { localStorage.setItem(STORE_KEY, v); } catch { /* private mode */ }
+}
 
 function queryOverride() {
   if (typeof window === 'undefined') return null;
@@ -25,20 +42,18 @@ function queryOverride() {
   return null;
 }
 
-function useShowFrame() {
-  const [show, setShow] = useState(() => {
-    const o = queryOverride();
-    if (o !== null) return o;
-    return typeof window !== 'undefined' && window.matchMedia(FRAME_QUERY).matches;
-  });
+function useMedia(query) {
+  const [matches, setMatches] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia(query).matches,
+  );
   useEffect(() => {
-    if (queryOverride() !== null) return undefined;
-    const mq = window.matchMedia(FRAME_QUERY);
-    const onChange = (e) => setShow(e.matches);
+    const mq = window.matchMedia(query);
+    const onChange = (e) => setMatches(e.matches);
     mq.addEventListener('change', onChange);
+    setMatches(mq.matches);
     return () => mq.removeEventListener('change', onChange);
-  }, []);
-  return show;
+  }, [query]);
+  return matches;
 }
 
 // Scale the frame down so the whole phone is visible on short laptop screens.
@@ -47,7 +62,7 @@ function useFitScale(enabled) {
   useLayoutEffect(() => {
     if (!enabled) return undefined;
     const recompute = () => {
-      const s = Math.min(1, (window.innerHeight - 48) / FRAME_H, (window.innerWidth - 48) / FRAME_W);
+      const s = Math.min(1, (window.innerHeight - 56) / FRAME_H, (window.innerWidth - 48) / FRAME_W);
       setScale(s > 0 ? s : 1);
     };
     recompute();
@@ -92,18 +107,62 @@ function IOSStatusBar() {
   );
 }
 
+function FrameToggle({ value, onChange }) {
+  const seg = (active) => ({
+    border: 'none',
+    cursor: 'pointer',
+    padding: '6px 14px',
+    borderRadius: 999,
+    fontFamily: 'var(--font-body)',
+    fontWeight: 700,
+    fontSize: 13,
+    lineHeight: 1,
+    color: active ? '#fff' : 'var(--pitch)',
+    background: active ? 'var(--sky)' : 'transparent',
+    transition: 'background .12s, color .12s',
+  });
+  return (
+    <div style={{ position: 'fixed', top: 12, left: '50%', transform: 'translateX(-50%)', zIndex: 2147483000, display: 'flex', gap: 2, padding: 3, borderRadius: 999, background: '#fff', boxShadow: '0 4px 16px rgba(16,18,22,0.18), 0 0 0 1px rgba(16,18,22,0.06)' }}>
+      <button type="button" style={seg(value === 'iphone')} onClick={() => onChange('iphone')}>iPhone</button>
+      <button type="button" style={seg(value === 'desktop')} onClick={() => onChange('desktop')}>Desktop</button>
+    </div>
+  );
+}
+
 export function DeviceFrame({ children, hostname = 'philrx.com' }) {
-  const showFrame = useShowFrame();
+  const isComputer = useMedia(COMPUTER_MEDIA);
+  const autoFrame = useMedia(FRAME_MEDIA);
+  const [mode, setMode] = useState(readStore); // 'iphone' | 'desktop' | null
+
+  const setModePersist = (m) => { setMode(m); writeStore(m); };
+
+  let showFrame;
+  if (mode) showFrame = mode === 'iphone';
+  else {
+    const q = queryOverride();
+    showFrame = q !== null ? q : autoFrame;
+  }
+
   const scale = useFitScale(showFrame);
+  const toggle = isComputer
+    ? <FrameToggle value={showFrame ? 'iphone' : 'desktop'} onChange={setModePersist} />
+    : null;
 
   if (!showFrame) {
-    return <div style={{ minHeight: '100vh', background: '#f4f4f4', boxSizing: 'border-box' }}>{children}</div>;
+    return (
+      <React.Fragment>
+        {toggle}
+        <div style={{ minHeight: '100vh', background: '#f4f4f4', boxSizing: 'border-box' }}>{children}</div>
+      </React.Fragment>
+    );
   }
 
   return (
     <div style={{ position: 'fixed', inset: 0, background: 'radial-gradient(circle at 50% 0%, #f1f3f6, #dfe3e9)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-      {/* keep pages sized to the frame, not the browser viewport */}
-      <style>{'.device-frame-screen [style*="100vh"]{min-height:100% !important;height:auto !important}'}</style>
+      {toggle}
+      {/* pages sized with viewport units target the browser window, not the
+          393px frame — pin them to the frame instead */}
+      <style>{'.device-frame-screen [style*="100vh"]{min-height:100% !important}.device-frame-screen [style*="100vw"]{max-width:100% !important}.device-frame-screen img,.device-frame-screen svg{max-width:100%}'}</style>
 
       <div style={{ transform: `scale(${scale})`, transformOrigin: 'center center' }}>
         <div style={{ width: FRAME_W, height: FRAME_H, background: '#101012', borderRadius: 60, padding: BEZEL, boxSizing: 'border-box', boxShadow: '0 40px 80px -20px rgba(16,18,22,0.55), 0 0 0 2px rgba(255,255,255,0.04) inset' }}>
