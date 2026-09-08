@@ -12,7 +12,6 @@ const SIGNATURE_CONSENT_FULL = `By signing electronically, I, {{.pt_consent_name
 const SIGNATURE_FAQ_ANSWER = `We collect your signature as required by your insurer to verify and confirm that you are only receiving prescriptions you really want. We won't fill your prescription without your approval.`;
 import applePayMark from '../assets/apple-pay-mark.svg';
 import applePayWordmark from '../assets/apple-pay-wordmark.svg';
-import paypalLogo from '../assets/paypal-logo.png';
 
 const SHIPPING_ADDRESS = { line1: '123 Main Street, Apt. 5', line2: 'San Francisco, CA 44512' };
 
@@ -38,11 +37,6 @@ const PAYMENT_METHODS = [
       </div>
     ),
   },
-  {
-    id: 'paypal',
-    label: 'PayPal Pay Later',
-    brand: <img src={paypalLogo} alt="PayPal" style={{ height: 14, flexShrink: 0 }} />,
-  },
 ];
 
 const ACCORDION_SECTIONS = [
@@ -51,9 +45,11 @@ const ACCORDION_SECTIONS = [
   { id: 'signature', label: 'Signature' },
 ];
 
-export function PaymentAccordions() {
+export function PaymentAccordions({ openSection: openProp, onOpenSectionChange }) {
   const navigate = useNavigate();
-  const [openSection, setOpenSection] = useState(null);
+  const [openInternal, setOpenInternal] = useState(null);
+  const openSection = openProp !== undefined ? openProp : openInternal;
+  const setOpenSection = onOpenSectionChange || setOpenInternal;
   const [autoRefill, setAutoRefill] = useState(false);
 
   const [paymentMethod, setPaymentMethod] = useState(null);
@@ -211,16 +207,11 @@ export function PaymentAccordions() {
                             </button>
                           )}
 
-                          {selected && method.id === 'paypal' && (
-                            <p style={{ margin: 0, fontSize: 14, color: 'var(--gunmetal)' }}>
-                              You&rsquo;ll be redirected to PayPal to complete your purchase.
-                            </p>
-                          )}
                         </div>
                       );
                     })}
 
-                    {(paymentMethod === 'card' || paymentMethod === 'paypal') && (
+                    {paymentMethod === 'card' && (
                       <Button hierarchy="primary" fullWidth onClick={() => setOpenSection('signature')}>Next</Button>
                     )}
                   </div>

@@ -48,7 +48,7 @@ export function MyPrescriptionsPage() {
           {divider}
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16, width: '100%' }}>
-            <Button hierarchy="primary" fullWidth onClick={() => navigate('/payment')}>View your cost</Button>
+            <Button hierarchy="primary" fullWidth onClick={() => navigate('/payment-scenarios')}>View your cost</Button>
             <Button hierarchy="secondary" fullWidth>Manage your prescription</Button>
           </div>
         </div>

@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@ds/components/forms/Button/Button.jsx';
-import { Checkbox } from '@ds/components/forms/Checkbox/Checkbox.jsx';
-import { SignaturePad } from '@ds/components/domain/SignaturePad/SignaturePad.jsx';
+import { DeclineEnrollmentModal } from '@ds/components/domain/DeclineEnrollmentModal/DeclineEnrollmentModal.jsx';
 import { MyPhilHeader } from '@ds/components/navigation/MyPhilHeader/MyPhilHeader.jsx';
 import { MyPhilFooter } from '@ds/components/navigation/MyPhilFooter/MyPhilFooter.jsx';
 
-const stopToggle = (e) => e.stopPropagation();
+const SAVINGS_TERMS = `I understand that if my prescription is not covered by my government sponsored program, I may be eligible for assistance programs from the manufacturer. If I do take such assistance from the manufacturer on my prescription, I understand that I cannot and will not seek reimbursement from my government sponsored program`;
 
 export function SavingsHipaaAuthorizationPage() {
   const navigate = useNavigate();
-  const [eligibilityAgreed, setEligibilityAgreed] = useState(true);
-  const [hipaaAgreed, setHipaaAgreed] = useState(false);
-  const [stayConnected, setStayConnected] = useState(false);
+  const [declineOpen, setDeclineOpen] = useState(false);
 
   return (
     <div style={{ width: '100%', minHeight: '100vh', boxSizing: 'border-box', background: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'var(--font-body)' }}>
@@ -24,57 +21,44 @@ export function SavingsHipaaAuthorizationPage() {
           <p style={{ fontSize: 16, lineHeight: '24px', color: 'var(--pitch)', margin: 0 }}>Agree to the terms and conditions below for potential savings.</p>
         </div>
 
-        <div style={{ borderTop: '1px solid var(--fade)' }} />
-
-        <Checkbox
-          checked={eligibilityAgreed}
-          onChange={() => setEligibilityAgreed((v) => !v)}
-          label={
-            <>
-              <strong>Eligibility &amp; Terms</strong>. By using this offer, the patient certifies...{' '}
-              <a href="#" onClick={stopToggle} style={{ color: 'var(--sky)' }}>View full terms</a>
-            </>
-          }
-        />
-
-        <Checkbox
-          checked={hipaaAgreed}
-          onChange={() => setHipaaAgreed((v) => !v)}
-          label={
-            <>
-              <strong>HIPAA Authorization:</strong> By clicking the checkbox, I agree that ...{' '}
-              <a href="#" onClick={stopToggle} style={{ color: 'var(--sky)' }}>View full terms</a>
-            </>
-          }
-        />
-
-        {hipaaAgreed && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            <p style={{ fontSize: 14, lineHeight: '20px', color: 'var(--gunmetal)', margin: 0 }}>
-              <em>(Required)</em> Draw your signature in the box below
-            </p>
-            <SignaturePad />
-          </div>
-        )}
-
-        <Checkbox
-          checked={stayConnected}
-          onChange={() => setStayConnected((v) => !v)}
-          label={
-            <>
-              <em>(Optional)</em> Stay connected - check the box to receive helpful updates, resources, and information about Astellas, its products, and services.{' '}
-              <a href="#" onClick={stopToggle} style={{ color: 'var(--sky)' }}>Read More</a>
-            </>
-          }
-        />
+        <div
+          style={{
+            width: '100%',
+            boxSizing: 'border-box',
+            maxHeight: 180,
+            overflowY: 'auto',
+            border: '1px solid var(--fade)',
+            borderRadius: 4,
+            padding: 16,
+          }}
+        >
+          <p style={{ fontSize: 16, lineHeight: '24px', color: 'var(--pitch)', margin: 0 }}>{SAVINGS_TERMS}</p>
+        </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-          <Button hierarchy="primary" fullWidth onClick={() => navigate('/enrollment-success')}>Enroll</Button>
-          <Button hierarchy="link">Decline</Button>
+          <Button hierarchy="primary" fullWidth onClick={() => navigate('/second-chance-enrolled')}>Agree and enroll</Button>
+          <Button hierarchy="secondary" fullWidth onClick={() => setDeclineOpen(true)}>Decline enrollment</Button>
         </div>
+
+        <p style={{ fontSize: 14, lineHeight: '20px', color: 'var(--gunmetal)', margin: 0 }}>
+          *Percentage depends on your insurance coverage.
+        </p>
       </div>
 
       <MyPhilFooter />
+
+      <DeclineEnrollmentModal
+        open={declineOpen}
+        onClose={() => setDeclineOpen(false)}
+        onEnroll={() => {
+          setDeclineOpen(false);
+          navigate('/second-chance-enrolled');
+        }}
+        onDecline={() => {
+          setDeclineOpen(false);
+          navigate('/second-chance-enrollment');
+        }}
+      />
     </div>
   );
 }

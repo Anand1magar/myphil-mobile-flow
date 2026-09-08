@@ -1,5 +1,4 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import { Button } from '@ds/components/forms/Button/Button.jsx';
 import { Icon } from '@ds/assets/icons/Icon.jsx';
 import { PhilRxAppHeader } from '../components/PhilRxAppHeader.jsx';
@@ -7,7 +6,8 @@ import { MyPhilFooter } from '@ds/components/navigation/MyPhilFooter/MyPhilFoote
 import { PaymentAccordions } from '../components/PaymentAccordions.jsx';
 
 export function PaymentPage() {
-  const navigate = useNavigate();
+  const [summaryOpen, setSummaryOpen] = useState(true);
+  const [openSection, setOpenSection] = useState(null);
 
   return (
     <div style={{ width: '100%', minHeight: '100vh', boxSizing: 'border-box', background: 'var(--paper)', display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'var(--font-body)' }}>
@@ -15,11 +15,17 @@ export function PaymentPage() {
 
       <div style={{ width: '100%', flex: 1, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 16, padding: '20px 16px' }}>
         <div style={{ width: '100%', boxSizing: 'border-box', background: '#fff', border: '1px solid var(--fade)', borderRadius: 4, padding: 16, display: 'flex', flexDirection: 'column', gap: 16 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <button
+            type="button"
+            onClick={() => setSummaryOpen((o) => !o)}
+            style={{ display: 'flex', alignItems: 'center', gap: 8, width: '100%', background: 'none', border: 'none', padding: 0, cursor: 'pointer', textAlign: 'left', fontFamily: 'var(--font-body)' }}
+          >
             <p style={{ flex: 1, fontSize: 16, fontWeight: 700, color: 'var(--pitch)', margin: 0 }}>Order summary</p>
-            <Icon name="ArrowDropUpStyleFilled" size={24} style={{ color: 'var(--pitch)', flexShrink: 0 }} />
-          </div>
+            <Icon name={summaryOpen ? 'ArrowDropUpStyleFilled' : 'ArrowDropDownStyleFilled'} size={24} style={{ color: 'var(--pitch)', flexShrink: 0 }} />
+          </button>
 
+          {summaryOpen && (
+          <React.Fragment>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             <p style={{ fontSize: 16, fontWeight: 700, color: 'var(--pitch)', margin: 0 }}>Drugname (chemical compositions) (volume)</p>
             <p style={{ fontSize: 14, color: 'var(--pitch)', margin: 0 }}>30-day supply</p>
@@ -45,18 +51,29 @@ export function PaymentPage() {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16, width: '100%' }}>
-            <Button hierarchy="primary" fullWidth onClick={() => navigate('/second-chance-enrollment')}>Next</Button>
+            <Button
+              hierarchy="primary"
+              fullWidth
+              onClick={() => {
+                setSummaryOpen(false);
+                setOpenSection('shipping');
+              }}
+            >
+              Next
+            </Button>
             <Button hierarchy="tertiary" fullWidth>Manage your prescription</Button>
           </div>
 
           <p style={{ fontSize: 14, color: 'var(--gunmetal)', opacity: 0.8, margin: 0 }}>
             *GoodRx reported price as of 10/15/2025
           </p>
+          </React.Fragment>
+          )}
         </div>
 
         <p style={{ fontSize: 16, color: 'var(--pitch)', margin: 0 }}>Please select next to move to the next step.</p>
 
-        <PaymentAccordions />
+        <PaymentAccordions openSection={openSection} onOpenSectionChange={setOpenSection} />
       </div>
 
       <MyPhilFooter insuranceNote />
