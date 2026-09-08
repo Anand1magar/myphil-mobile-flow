@@ -119,6 +119,8 @@ export function PaymentAccordions() {
                         </span>
                       </span>
                     </button>
+
+                    <Button hierarchy="primary" fullWidth onClick={() => setOpenSection('payment')}>Next</Button>
                   </>
                 )}
 
@@ -201,6 +203,7 @@ export function PaymentAccordions() {
                           {selected && method.id === 'apple-pay' && (
                             <button
                               type="button"
+                              onClick={() => setOpenSection('signature')}
                               style={{ width: '100%', boxSizing: 'border-box', height: 48, border: '1px solid var(--pitch)', borderRadius: 4, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, cursor: 'pointer' }}
                             >
                               <img src={applePayMark} alt="" style={{ height: 18 }} />
@@ -216,6 +219,10 @@ export function PaymentAccordions() {
                         </div>
                       );
                     })}
+
+                    {(paymentMethod === 'card' || paymentMethod === 'paypal') && (
+                      <Button hierarchy="primary" fullWidth onClick={() => setOpenSection('signature')}>Next</Button>
+                    )}
                   </div>
                 )}
 
