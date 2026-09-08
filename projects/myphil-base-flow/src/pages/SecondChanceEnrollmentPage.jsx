@@ -72,7 +72,9 @@ export function SecondChanceEnrollmentPage() {
           )}
         </div>
 
-        <p style={{ fontSize: 16, color: 'var(--pitch)', margin: 0 }}>Please select next to move to the next step.</p>
+        {openSection === null && (
+          <p style={{ fontSize: 16, color: 'var(--pitch)', margin: 0 }}>Please select next to move to the next step.</p>
+        )}
 
         <PaymentAccordions openSection={openSection} onOpenSectionChange={setOpenSection} />
       </div>

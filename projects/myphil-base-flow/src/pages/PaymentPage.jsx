@@ -13,7 +13,7 @@ export function PaymentPage() {
     <div style={{ width: '100%', minHeight: '100vh', boxSizing: 'border-box', background: 'var(--paper)', display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'var(--font-body)' }}>
       <PhilRxAppHeader />
 
-      <div style={{ width: '100%', flex: 1, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 16, padding: '20px 16px' }}>
+      <div style={{ width: '100%', flex: 1, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 16, padding: '20px 16px 60px' }}>
         <div style={{ width: '100%', boxSizing: 'border-box', background: '#fff', border: '1px solid var(--fade)', borderRadius: 4, padding: 16, display: 'flex', flexDirection: 'column', gap: 16 }}>
           <button
             type="button"
@@ -71,7 +71,9 @@ export function PaymentPage() {
           )}
         </div>
 
-        <p style={{ fontSize: 16, color: 'var(--pitch)', margin: 0 }}>Please select next to move to the next step.</p>
+        {openSection === null && (
+          <p style={{ fontSize: 16, color: 'var(--pitch)', margin: 0 }}>Please select next to move to the next step.</p>
+        )}
 
         <PaymentAccordions openSection={openSection} onOpenSectionChange={setOpenSection} />
       </div>

@@ -17,10 +17,10 @@ const SHIPPING_ADDRESS = { line1: '123 Main Street, Apt. 5', line2: 'San Francis
 
 const CardBrandMarks = () => (
   <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0 }}>
-    <span style={{ fontFamily: 'Arial, sans-serif', fontWeight: 900, fontSize: 11, letterSpacing: '-0.4px', color: '#1a1f71' }}>VISA</span>
-    <div style={{ position: 'relative', width: 20, height: 12 }}>
-      <div style={{ position: 'absolute', left: 0, top: 0, width: 12, height: 12, borderRadius: '50%', background: '#eb001b' }} />
-      <div style={{ position: 'absolute', left: 6, top: 0, width: 12, height: 12, borderRadius: '50%', background: '#f79e1b', opacity: 0.9 }} />
+    <span style={{ fontFamily: 'Arial, sans-serif', fontWeight: 900, fontSize: 15, letterSpacing: '-0.4px', color: '#1a1f71' }}>VISA</span>
+    <div style={{ position: 'relative', width: 27, height: 17 }}>
+      <div style={{ position: 'absolute', left: 0, top: 0, width: 17, height: 17, borderRadius: '50%', background: '#eb001b' }} />
+      <div style={{ position: 'absolute', left: 10, top: 0, width: 17, height: 17, borderRadius: '50%', background: '#f79e1b', opacity: 0.9 }} />
     </div>
   </div>
 );
@@ -32,8 +32,8 @@ const PAYMENT_METHODS = [
     label: 'Apple Pay',
     brand: (
       <div style={{ display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0 }}>
-        <img src={applePayMark} alt="" style={{ height: 12 }} />
-        <img src={applePayWordmark} alt="" style={{ height: 12 }} />
+        <img src={applePayMark} alt="" style={{ height: 16 }} />
+        <img src={applePayWordmark} alt="" style={{ height: 16 }} />
       </div>
     ),
   },
@@ -66,9 +66,10 @@ export function PaymentAccordions({ openSection: openProp, onOpenSectionChange }
     <>
       {ACCORDION_SECTIONS.map((section) => {
         const isOpen = openSection === section.id;
+        const showNextStepHint = isOpen && section.id !== 'signature';
         return (
+          <React.Fragment key={section.id}>
           <div
-            key={section.id}
             style={{ width: '100%', boxSizing: 'border-box', background: '#fff', border: '1px solid var(--fade)', borderRadius: 4, overflow: 'hidden' }}
           >
             <button
@@ -81,7 +82,7 @@ export function PaymentAccordions({ openSection: openProp, onOpenSectionChange }
             </button>
 
             {isOpen && (
-              <div style={{ padding: '0 16px 16px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <div style={{ padding: '0 16px 16px', display: 'flex', flexDirection: 'column', gap: 16, columnGap: 16 }}>
                 {section.id === 'shipping' && (
                   <>
                     <div style={{ width: '100%', boxSizing: 'border-box', border: '1px solid var(--gunmetal)', borderRadius: 4, padding: 16, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 4 }}>
@@ -258,6 +259,11 @@ export function PaymentAccordions({ openSection: openProp, onOpenSectionChange }
               </div>
             )}
           </div>
+
+          {showNextStepHint && (
+            <p style={{ fontSize: 16, color: 'var(--pitch)', margin: 0 }}>Please select next to move to the next step.</p>
+          )}
+          </React.Fragment>
         );
       })}
     </>
