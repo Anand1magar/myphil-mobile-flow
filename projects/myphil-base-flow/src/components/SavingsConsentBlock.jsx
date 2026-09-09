@@ -40,6 +40,15 @@ export function SavingsConsentBlock({ heading }) {
         }
       />
 
+      {hipaaAgreed && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <p style={{ fontSize: 14, lineHeight: '20px', color: 'var(--gunmetal)', margin: 0 }}>
+            <em>(Required)</em> Draw your signature in the box below
+          </p>
+          <SignaturePad />
+        </div>
+      )}
+
       <Checkbox
         checked={stayConnected}
         onChange={() => setStayConnected((v) => !v)}
@@ -50,15 +59,6 @@ export function SavingsConsentBlock({ heading }) {
           </>
         }
       />
-
-      {hipaaAgreed && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-          <p style={{ fontSize: 14, lineHeight: '20px', color: 'var(--gunmetal)', margin: 0 }}>
-            <em>(Required)</em> Draw your signature in the box below
-          </p>
-          <SignaturePad />
-        </div>
-      )}
     </div>
   );
 }
