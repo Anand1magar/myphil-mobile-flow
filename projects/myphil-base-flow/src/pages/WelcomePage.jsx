@@ -4,8 +4,6 @@ import { Button } from '@ds/components/forms/Button/Button.jsx';
 import { TextInput } from '@ds/components/forms/TextInput/TextInput.jsx';
 import { NextSteps } from '@ds/components/domain/NextSteps/NextSteps.jsx';
 import { CaregiverModal } from '@ds/components/domain/CaregiverModal/CaregiverModal.jsx';
-import { Icon } from '@ds/assets/icons/Icon.jsx';
-import checkCircleTeal from '@ds/assets/icons/check-circle-teal.svg';
 import { MyPhilHeader } from '@ds/components/navigation/MyPhilHeader/MyPhilHeader.jsx';
 import { MyPhilFooter } from '@ds/components/navigation/MyPhilFooter/MyPhilFooter.jsx';
 import trustpilotRating from '@ds/assets/images/trustpilot-rating.png';
@@ -18,12 +16,10 @@ import hipaaVectorStroke from '@ds/assets/icons/hipaa-badge/hipaa-vector-stroke.
 
 const PATIENT_NAME = 'Patricia';
 
-const FAQ_LINKS = ['Who is Phil?', 'How it works', 'What past users have said'];
-
-const HOW_IT_WORKS = [
-  'Phil partners with the makers of Drugname (chemical compositions) (volume) to make it easy for patients to access their medications.',
-  'Phil partners with the makers of Drugname (chemical compositions) (volume) to make it easy for patients to access their medications.',
-  'We work with our nationwide network of pharmacies to deliver prescriptions quickly and easily.',
+const WHY_PHILRX = [
+  'Automated refills that are processed and delivered as part of our auto-refill program',
+  'Free shipping with every delivery',
+  'Manufacturer offers that may be applied to lower your cost',
 ];
 
 function HipaaBadge() {
@@ -53,13 +49,9 @@ export function WelcomePage() {
       <div style={{ width: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 28, padding: '20px 16px 60px' }}>
         <h1 style={{ fontSize: 26, fontWeight: 700, lineHeight: '36px', color: 'var(--pitch)', margin: 0 }}>Welcome, {PATIENT_NAME}!</h1>
 
-        <p style={{ fontSize: 16, lineHeight: '24px', color: 'var(--pitch)', margin: 0 }}>
-          Your Drugname (chemical compositions) (volume) is ready! Dr. Cristina Truman sent your prescription to PhilRx.
-        </p>
-
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <p style={{ fontSize: 16, lineHeight: '24px', color: 'var(--pitch)', margin: 0 }}>
-            To keep your info safe and get your medication fast, confirm your identity.
+            Dr. Cristina Truman sent your Drugname (chemical compositions) (volume) prescription. Confirm your identity to continue.
           </p>
           <TextInput label="Last name" placeholder="Last name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
           <TextInput label="Date of birth (MM/DD/YYYY)" placeholder="Date of birth (MM/DD/YYYY)" value={dob} onChange={(e) => setDob(e.target.value)} />
@@ -77,7 +69,7 @@ export function WelcomePage() {
         </div>
         <div style={{ borderTop: '1px solid var(--fade)' }} />
         <p style={{ fontSize: 16, lineHeight: '24px', color: 'var(--pitch)', margin: 0 }}>
-          Already have a Phil account? <a href="#" style={{ color: 'var(--sky)', fontWeight: 700 }}>Log in</a>
+          Already have a PHILRx account? <a href="#" style={{ color: 'var(--sky)', fontWeight: 700, textDecoration: 'underline' }}>Log in</a>
         </p>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <img src={trustpilotRating} alt="Trustpilot" style={{ height: 36 }} />
@@ -90,48 +82,27 @@ export function WelcomePage() {
         <NextSteps
           title="What's next"
           steps={[
-            'Complete this online form to confirm your identity and insurance.',
-            "We'll work with your insurance to find the lowest price.",
-            'Once payment is received, your prescription will be delivered to you.',
+            'Confirm your information',
+            'PHILRx will find your lowest price',
+            'Confirm your price, and we’ll ship your medication',
           ]}
         />
       </div>
 
-      <div style={{ width: '100%', background: '#f4f4f4', padding: 16, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 24 }}>
+      <div style={{ width: '100%', background: 'var(--paper)', padding: '24px 16px', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 24 }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <p style={{ fontSize: 18, fontWeight: 700, color: 'var(--pitch)', margin: 0 }}>Frequently asked questions</p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-            {FAQ_LINKS.map((q) => (
-              <p key={q} style={{ fontSize: 16, color: 'var(--sky)', margin: 0 }}>{q} &gt;</p>
-            ))}
-          </div>
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <p style={{ fontSize: 16, fontWeight: 700, color: 'var(--pitch)', margin: 0 }}>Who is Phil?</p>
+          <p style={{ fontSize: 18, fontWeight: 700, lineHeight: '28px', color: 'var(--pitch)', margin: 0 }}>Why should I use PHILRx?</p>
           <p style={{ fontSize: 16, lineHeight: '24px', color: 'var(--pitch)', margin: 0 }}>
-            At Phil, we are on a mission to help people get their prescriptions quickly, easily and affordably. Our simple experience helps get your medication covered by insurance and delivered to your door while keeping you updated on the process.
+            PHILRx coordinates with your doctor, your insurance company, and our network of partner pharmacies to work on finding your lowest cost and get your prescription filled. PHILRx has:
           </p>
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <p style={{ fontSize: 16, fontWeight: 700, color: 'var(--pitch)', margin: 0 }}>How it works</p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            {HOW_IT_WORKS.map((text, i) => (
-              <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-                <img src={checkCircleTeal} alt="" width={22} height={22} style={{ flexShrink: 0, marginTop: 1 }} />
-                <p style={{ fontSize: 16, lineHeight: '24px', color: 'var(--pitch)', margin: 0 }}>{text}</p>
-              </div>
+          <ul style={{ margin: 0, paddingLeft: 24, fontSize: 16, lineHeight: '24px', color: 'var(--pitch)' }}>
+            {WHY_PHILRX.map((item) => (
+              <li key={item}>{item}</li>
             ))}
-          </div>
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <p style={{ fontSize: 16, fontWeight: 700, color: 'var(--pitch)', margin: 0 }}>Testimonial</p>
+          </ul>
           <p style={{ fontSize: 16, lineHeight: '24px', color: 'var(--pitch)', margin: 0 }}>
-            &ldquo;I am grateful for the price of my prescription medication, your communication, and delivery services!&rdquo;
+            PHILRx is here to help manage your prescription!
           </p>
-          <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--pitch)', textAlign: 'right', margin: 0 }}>- Phil user</p>
         </div>
       </div>
 
