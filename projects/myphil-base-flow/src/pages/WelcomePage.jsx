@@ -5,6 +5,7 @@ import { TextInput } from '@ds/components/forms/TextInput/TextInput.jsx';
 import { NextSteps } from '@ds/components/domain/NextSteps/NextSteps.jsx';
 import { CaregiverModal } from '@ds/components/domain/CaregiverModal/CaregiverModal.jsx';
 import { Icon } from '@ds/assets/icons/Icon.jsx';
+import checkCircleTeal from '@ds/assets/icons/check-circle-teal.svg';
 import { MyPhilHeader } from '@ds/components/navigation/MyPhilHeader/MyPhilHeader.jsx';
 import { MyPhilFooter } from '@ds/components/navigation/MyPhilFooter/MyPhilFooter.jsx';
 import trustpilotRating from '@ds/assets/images/trustpilot-rating.png';
@@ -49,7 +50,7 @@ export function WelcomePage() {
     <div style={{ width: '100%', background: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'var(--font-body)' }}>
       <MyPhilHeader />
 
-      <div style={{ width: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 28, padding: '20px 16px' }}>
+      <div style={{ width: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 28, padding: '20px 16px 60px' }}>
         <h1 style={{ fontSize: 26, fontWeight: 700, lineHeight: '36px', color: 'var(--pitch)', margin: 0 }}>Welcome, {PATIENT_NAME}!</h1>
 
         <p style={{ fontSize: 16, lineHeight: '24px', color: 'var(--pitch)', margin: 0 }}>
@@ -118,7 +119,7 @@ export function WelcomePage() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             {HOW_IT_WORKS.map((text, i) => (
               <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-                <Icon name="CheckCircleStyleFilled" size={24} style={{ color: 'var(--sky)', flexShrink: 0 }} />
+                <img src={checkCircleTeal} alt="" width={22} height={22} style={{ flexShrink: 0, marginTop: 1 }} />
                 <p style={{ fontSize: 16, lineHeight: '24px', color: 'var(--pitch)', margin: 0 }}>{text}</p>
               </div>
             ))}
