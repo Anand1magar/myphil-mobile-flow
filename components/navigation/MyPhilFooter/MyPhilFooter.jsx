@@ -4,7 +4,7 @@ import React from 'react';
 // "Insurance questions?" note above it (used on payment / prescription screens).
 export function MyPhilFooter({ insuranceNote = false }) {
   return (
-    <div style={{ width: '100%', background: 'var(--pure)', borderTop: '0.5px solid var(--base)', fontFamily: 'var(--font-body)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16, padding: '16px 16px 28px' }}>
+    <div style={{ width: '100%', background: 'var(--pure)', borderTop: '0.5px solid var(--base)', fontFamily: 'var(--font-body)', lineHeight: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16, padding: '16px 16px 28px' }}>
       {insuranceNote && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 4, width: '100%' }}>
           <span style={{ fontSize: 16, fontWeight: 700, color: 'var(--pitch)' }}>Insurance questions?</span>
