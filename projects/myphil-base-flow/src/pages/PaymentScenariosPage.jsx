@@ -18,10 +18,28 @@ const SCENARIOS = [
     description: 'A manufacturer offer banner sits above the insurance price. Enrolling opens the savings terms; declining opens the “Why pay full price?” prompt.',
   },
   {
+    id: 'second-chance-banner-combined',
+    name: 'Second chance enrollment — banner (HIPAA + coupon combined)',
+    route: '/second-chance-enrollment?combined=1',
+    description: 'The banner flow, but enrolling opens one screen with the eligibility and HIPAA checkboxes plus the signature, rather than a terms scroll-box.',
+  },
+  {
     id: 'second-chance-dual-pricing',
     name: 'Second chance enrollment — dual pricing',
     route: '/dual-pricing',
     description: 'Two prices side by side — final price versus manufacturer offer — chosen before checkout begins.',
+  },
+  {
+    id: 'second-chance-dual-pricing-combined',
+    name: 'Second chance enrollment — dual pricing (HIPAA + coupon combined)',
+    route: '/dual-pricing?combined=1',
+    description: 'Dual pricing where choosing the manufacturer offer expands the order summary to hold the consent checkboxes and signature inline.',
+  },
+  {
+    id: 'refills',
+    name: 'Refills',
+    route: '/refill-review',
+    description: 'A returning patient reviews and confirms a refill on one screen, using the card already on file.',
   },
 ];
 

@@ -21,7 +21,9 @@ import { MyPrescriptionsPage } from './pages/MyPrescriptionsPage.jsx';
 import { PaymentPage } from './pages/PaymentPage.jsx';
 import { SecondChanceEnrollmentPage } from './pages/SecondChanceEnrollmentPage.jsx';
 import { SecondChanceEnrolledPage } from './pages/SecondChanceEnrolledPage.jsx';
+import { SecondChanceConsentPage } from './pages/SecondChanceConsentPage.jsx';
 import { DualPricingPage } from './pages/DualPricingPage.jsx';
+import { RefillReviewPage } from './pages/RefillReviewPage.jsx';
 import { PaymentScenariosPage } from './pages/PaymentScenariosPage.jsx';
 import { OrderConfirmationPage } from './pages/OrderConfirmationPage.jsx';
 
@@ -48,8 +50,10 @@ const SCREENS = [
   ['/payment-scenarios', PaymentScenariosPage],
   ['/payment', PaymentPage],
   ['/second-chance-enrollment', SecondChanceEnrollmentPage],
+  ['/second-chance-consent', SecondChanceConsentPage],
   ['/second-chance-enrolled', SecondChanceEnrolledPage],
   ['/dual-pricing', DualPricingPage],
+  ['/refill-review', RefillReviewPage],
   ['/order-confirmation', OrderConfirmationPage],
 ];
 

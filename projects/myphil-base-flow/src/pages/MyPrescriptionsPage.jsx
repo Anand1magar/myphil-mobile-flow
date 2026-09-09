@@ -49,6 +49,7 @@ export function MyPrescriptionsPage() {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16, width: '100%' }}>
             <Button hierarchy="primary" fullWidth onClick={() => navigate('/payment-scenarios')}>View your cost</Button>
+            <Button hierarchy="secondary" fullWidth onClick={() => navigate('/refill-review')}>Refill</Button>
             <Button hierarchy="secondary" fullWidth>Manage your prescription</Button>
           </div>
         </div>

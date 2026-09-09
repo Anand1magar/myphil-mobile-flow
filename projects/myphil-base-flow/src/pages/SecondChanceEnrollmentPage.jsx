@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '@ds/components/forms/Button/Button.jsx';
 import { Icon } from '@ds/assets/icons/Icon.jsx';
 import { PhilRxAppHeader } from '../components/PhilRxAppHeader.jsx';
@@ -8,6 +8,11 @@ import { PaymentAccordions } from '../components/PaymentAccordions.jsx';
 
 export function SecondChanceEnrollmentPage() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  // When HIPAA and the coupon are combined, enrolling goes to the consent
+  // screen (checkboxes + signature) instead of the terms scroll-box.
+  const combined = searchParams.get('combined') === '1';
+  const enrollRoute = combined ? '/second-chance-consent' : '/savings-enrollment-hipaa-authorization-combined';
   const [summaryOpen, setSummaryOpen] = useState(true);
   const [openSection, setOpenSection] = useState(null);
   return (
@@ -39,7 +44,7 @@ export function SecondChanceEnrollmentPage() {
                   <p style={{ margin: 0, fontSize: 16, fontWeight: 700, color: 'var(--pitch)', textTransform: 'uppercase' }}>Pay as low as $XX!</p>
                   <p style={{ margin: 0, fontSize: 16, color: 'var(--pitch)' }}>Save up to xx% by enrolling in the manufacturer offer!</p>
                 </div>
-                <Button hierarchy="primary" onClick={() => navigate('/savings-enrollment-hipaa-authorization-combined')}>Enroll now</Button>
+                <Button hierarchy="primary" onClick={() => navigate(enrollRoute)}>Enroll now</Button>
               </div>
 
               <div style={{ width: '100%', boxSizing: 'border-box', border: '1px solid var(--fade)', borderRadius: 4, padding: '20px 12px' }}>

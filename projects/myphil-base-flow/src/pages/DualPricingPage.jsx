@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Button } from '@ds/components/forms/Button/Button.jsx';
+import { SavingsConsentBlock } from '../components/SavingsConsentBlock.jsx';
 import { Radio } from '@ds/components/forms/Radio/Radio.jsx';
 import { Icon } from '@ds/assets/icons/Icon.jsx';
 import { PhilRxAppHeader } from '../components/PhilRxAppHeader.jsx';
@@ -25,6 +27,10 @@ const PRICING_OPTIONS = [
 ];
 
 export function DualPricingPage() {
+  const [searchParams] = useSearchParams();
+  // When HIPAA and the coupon are combined, choosing the manufacturer offer
+  // reveals the full consent block in place of the short terms note.
+  const combined = searchParams.get('combined') === '1';
   const [summaryOpen, setSummaryOpen] = useState(true);
   const [pricing, setPricing] = useState('final');
   const [openSection, setOpenSection] = useState(null);
@@ -68,9 +74,15 @@ export function DualPricingPage() {
                       label={option.label}
                     />
                     {pricing === option.id && (
-                      <div style={{ width: '100%', boxSizing: 'border-box', border: '1px solid var(--fade)', borderRadius: 4, padding: 12 }}>
-                        <p style={{ margin: 0, fontSize: 14, lineHeight: '20px', color: 'var(--pitch)' }}>{option.note}</p>
-                      </div>
+                      combined && option.id === 'manufacturer' ? (
+                        <div style={{ width: '100%', boxSizing: 'border-box', border: '1px solid var(--fade)', borderRadius: 4, padding: 12 }}>
+                          <SavingsConsentBlock heading="Great news, great savings!" />
+                        </div>
+                      ) : (
+                        <div style={{ width: '100%', boxSizing: 'border-box', border: '1px solid var(--fade)', borderRadius: 4, padding: 12 }}>
+                          <p style={{ margin: 0, fontSize: 14, lineHeight: '20px', color: 'var(--pitch)' }}>{option.note}</p>
+                        </div>
+                      )
                     )}
                   </div>
                 ))}
