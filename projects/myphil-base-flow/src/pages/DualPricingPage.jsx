@@ -8,22 +8,12 @@ import { PhilRxAppHeader } from '../components/PhilRxAppHeader.jsx';
 import { MyPhilFooter } from '@ds/components/navigation/MyPhilFooter/MyPhilFooter.jsx';
 import { PaymentAccordions } from '../components/PaymentAccordions.jsx';
 
+// Figma "Border / grey border" — a touch cooler than the --fade default.
+const DUAL_PAYMENT_BORDER = '#D1D6DC';
+
 const PRICING_OPTIONS = [
-  {
-    id: 'final',
-    label: 'Final price, $XX',
-    note: 'By choosing this option, your purchase will count towards your insurance deductible and out-of-pocket max.',
-  },
-  {
-    id: 'manufacturer',
-    label: 'Manufacturer offer, $XX',
-    note: (
-      <>
-        By selecting the manufacturer offer, you agree not to seek reimbursement from insurance company, and agree to the{' '}
-        <a href="#" onClick={(e) => e.preventDefault()} style={{ color: 'var(--sky)' }}>Terms &amp; Conditions</a>.
-      </>
-    ),
-  },
+  { id: 'final', label: 'Final price, $XX' },
+  { id: 'manufacturer', label: 'Manufacturer offer, $XX' },
 ];
 
 export function DualPricingPage() {
@@ -52,49 +42,37 @@ export function DualPricingPage() {
 
           {summaryOpen && (
             <React.Fragment>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                <p style={{ fontSize: 16, fontWeight: 700, color: 'var(--pitch)', margin: 0 }}>Drugname (chemical compositions) (volume)</p>
-                <p style={{ fontSize: 14, color: 'var(--pitch)', margin: 0 }}>XX-day supply</p>
-              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8, width: '100%' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                  <p style={{ fontSize: 16, fontWeight: 700, lineHeight: '24px', color: 'var(--pitch)', margin: 0 }}>Drugname (chemical compositions) (volume)</p>
+                  <p style={{ fontSize: 14, lineHeight: '20px', color: 'var(--pitch)', margin: 0 }}>XX-day supply</p>
+                </div>
 
-              <div style={{ width: '100%', boxSizing: 'border-box', background: 'var(--sky-tint)', borderRadius: 4, padding: 12 }}>
-                <p style={{ margin: 0, fontSize: 14, lineHeight: '20px', color: 'var(--pitch)' }}>
-                  Good news! There&rsquo;s a manufacturer offer available to lower your price. Review the Terms &amp; Conditions after selecting manufacturer offer to get the lower price.
-                </p>
-              </div>
+                <div style={{ width: '100%', boxSizing: 'border-box', background: 'var(--pure)', border: `1px solid ${DUAL_PAYMENT_BORDER}`, borderRadius: 4, padding: '8px 12px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+                  {PRICING_OPTIONS.map((option) => (
+                    <React.Fragment key={option.id}>
+                      <Radio
+                        borderless
+                        name="dual-pricing"
+                        checked={pricing === option.id}
+                        onChange={() => setPricing(option.id)}
+                        label={<span style={{ fontWeight: 700 }}>{option.label}</span>}
+                      />
+                      {combined && option.id === 'manufacturer' && pricing === 'manufacturer' && (
+                        <SavingsConsentBlock heading="Great news, great savings!" />
+                      )}
+                    </React.Fragment>
+                  ))}
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%' }}>
-                {PRICING_OPTIONS.map((option) => (
-                  <div key={option.id} style={{ display: 'flex', flexDirection: 'column', gap: 8, width: '100%' }}>
-                    <Radio
-                      borderless
-                      name="dual-pricing"
-                      checked={pricing === option.id}
-                      onChange={() => setPricing(option.id)}
-                      label={option.label}
-                    />
-                    {pricing === option.id && (
-                      combined && option.id === 'manufacturer' ? (
-                        <div style={{ width: '100%', boxSizing: 'border-box', border: '1px solid var(--fade)', borderRadius: 4, padding: 12 }}>
-                          <SavingsConsentBlock heading="Great news, great savings!" />
-                        </div>
-                      ) : (
-                        <div style={{ width: '100%', boxSizing: 'border-box', border: '1px solid var(--fade)', borderRadius: 4, padding: 12 }}>
-                          <p style={{ margin: 0, fontSize: 14, lineHeight: '20px', color: 'var(--pitch)' }}>{option.note}</p>
-                        </div>
-                      )
-                    )}
-                  </div>
-                ))}
-              </div>
+                  <p style={{ margin: 0, fontSize: 14, lineHeight: '22px', color: 'var(--pitch)' }}>
+                    <a href="#" onClick={(e) => e.preventDefault()} style={{ color: 'var(--sky)', textDecoration: 'underline' }}>Learn more</a> about these pricing
+                  </p>
+                </div>
 
-              <p style={{ margin: 0, fontSize: 16, color: 'var(--pitch)' }}>
-                <a href="#" onClick={(e) => e.preventDefault()} style={{ color: 'var(--sky)' }}>Learn more</a> about these pricing
-              </p>
-
-              <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-                <span style={{ fontSize: 16, fontWeight: 700, color: 'var(--pitch)' }}>Your total cost</span>
-                <span style={{ fontSize: 16, fontWeight: 700, color: 'var(--pitch)' }}>$XX.00</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', fontSize: 16, fontWeight: 700, lineHeight: '24px', color: 'var(--pitch)' }}>
+                  <span>Your total cost</span>
+                  <span>$XX.00</span>
+                </div>
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16, width: '100%' }}>
