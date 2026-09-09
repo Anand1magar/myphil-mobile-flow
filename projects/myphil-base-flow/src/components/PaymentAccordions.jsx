@@ -178,10 +178,9 @@ export function PaymentAccordions({ openSection: openProp, onOpenSectionChange }
                                   label={
                                     <span style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                                       <span style={{ color: 'var(--pitch)' }}>Same as shipping address</span>
-                                      <span style={{ fontSize: 14, color: 'var(--gunmetal)' }}>
-                                        {SHIPPING_ADDRESS.line1}
-                                        <br />
-                                        {SHIPPING_ADDRESS.line2}
+                                      <span style={{ fontSize: 14, color: 'var(--gunmetal)', display: 'flex', flexDirection: 'column' }}>
+                                        <span>{SHIPPING_ADDRESS.line1}</span>
+                                        <span>{SHIPPING_ADDRESS.line2}</span>
                                       </span>
                                     </span>
                                   }

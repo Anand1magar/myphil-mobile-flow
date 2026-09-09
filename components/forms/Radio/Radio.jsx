@@ -10,7 +10,7 @@ export function Radio({ label, supportingText, checked = false, onChange, disabl
         display: 'flex',
         width: '100%',
         boxSizing: 'border-box',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         gap: 8,
         padding: borderless ? '0 0 8px' : '18px 16px',
         borderRadius: borderless ? 0 : 4,
@@ -26,7 +26,7 @@ export function Radio({ label, supportingText, checked = false, onChange, disabl
       </span>
       <input type="radio" name={name} checked={checked} onChange={onChange} disabled={disabled} style={{ display: 'none' }} />
       {(label || supportingText) && (
-        <span style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 4 }}>
+        <span style={{ flex: 1, minWidth: 0, marginTop: 4, display: 'flex', flexDirection: 'column', gap: 4 }}>
           {label && <span style={{ fontSize: 16, lineHeight: '24px', letterSpacing: '0.024px', color: 'var(--pitch)' }}>{label}</span>}
           {supportingText && <span style={{ fontSize: 14, lineHeight: '20px', letterSpacing: '0.035px', color: 'var(--gunmetal)' }}>{supportingText}</span>}
         </span>
