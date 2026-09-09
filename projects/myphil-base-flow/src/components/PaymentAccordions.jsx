@@ -109,8 +109,8 @@ export function PaymentAccordions({ openSection: openProp, onOpenSectionChange }
                         {autoRefill && <svg width="14" height="11" viewBox="0 0 14 11" fill="none"><path d="M1 5.5L5 9.5L13 1.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>}
                       </span>
                       <span style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                        <span style={{ fontSize: 16, color: 'var(--pitch)' }}>Ship refills automatically</span>
-                        <span style={{ fontSize: 14, color: 'var(--pitch)' }}>
+                        <span style={{ fontSize: 16, lineHeight: '20px', color: 'var(--pitch)' }}>Ship refills automatically</span>
+                        <span style={{ fontSize: 14, lineHeight: '20px', color: 'var(--pitch)' }}>
                           We&rsquo;ll notify before your refill ships. You can unenroll any time.{' '}
                           <span style={{ color: 'var(--sky)', textDecoration: 'underline' }}>Learn more</span>
                         </span>
