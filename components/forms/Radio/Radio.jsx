@@ -4,13 +4,16 @@ import React from 'react';
 // and border shift on selection, with an optional gray supporting line.
 // Pass `borderless` for a plain radio row (no card chrome).
 export function Radio({ label, supportingText, checked = false, onChange, disabled = false, name, borderless = false }) {
+  // A single-line label centers against the control; a label with supporting
+  // text is top-aligned so the control sits beside the first line.
+  const hasSupporting = Boolean(supportingText);
   return (
     <label
       style={{
         display: 'flex',
         width: '100%',
         boxSizing: 'border-box',
-        alignItems: 'flex-start',
+        alignItems: hasSupporting ? 'flex-start' : 'center',
         gap: 8,
         padding: borderless ? '0 0 8px' : '18px 16px',
         borderRadius: borderless ? 0 : 4,
@@ -26,7 +29,7 @@ export function Radio({ label, supportingText, checked = false, onChange, disabl
       </span>
       <input type="radio" name={name} checked={checked} onChange={onChange} disabled={disabled} style={{ display: 'none' }} />
       {(label || supportingText) && (
-        <span style={{ flex: 1, minWidth: 0, marginTop: 8, display: 'flex', flexDirection: 'column', gap: 4 }}>
+        <span style={{ flex: 1, minWidth: 0, marginTop: hasSupporting ? 8 : 0, display: 'flex', flexDirection: 'column', gap: 4 }}>
           {label && <span style={{ fontSize: 16, lineHeight: '24px', letterSpacing: '0.024px', color: 'var(--pitch)' }}>{label}</span>}
           {supportingText && <span style={{ fontSize: 14, lineHeight: '20px', letterSpacing: '0.035px', color: 'var(--gunmetal)', whiteSpace: 'pre-line' }}>{supportingText}</span>}
         </span>
