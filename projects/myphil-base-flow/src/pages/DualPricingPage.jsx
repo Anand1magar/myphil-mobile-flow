@@ -50,24 +50,36 @@ export function DualPricingPage() {
 
                 <div style={{ width: '100%', boxSizing: 'border-box', background: 'var(--pure)', border: `1px solid ${DUAL_PAYMENT_BORDER}`, borderRadius: 4, padding: '8px 12px', display: 'flex', flexDirection: 'column', gap: 8 }}>
                   {PRICING_OPTIONS.map((option) => (
-                    <React.Fragment key={option.id}>
-                      <Radio
-                        borderless
-                        name="dual-pricing"
-                        checked={pricing === option.id}
-                        onChange={() => setPricing(option.id)}
-                        label={<span style={{ fontWeight: 700 }}>{option.label}</span>}
-                      />
-                      {combined && option.id === 'manufacturer' && pricing === 'manufacturer' && (
-                        <SavingsConsentBlock heading="Great news, great savings!" />
-                      )}
-                    </React.Fragment>
+                    <Radio
+                      key={option.id}
+                      borderless
+                      name="dual-pricing"
+                      checked={pricing === option.id}
+                      onChange={() => setPricing(option.id)}
+                      label={<span style={{ fontWeight: 700 }}>{option.label}</span>}
+                    />
                   ))}
 
                   <p style={{ margin: 0, fontSize: 14, lineHeight: '22px', color: 'var(--pitch)' }}>
                     <a href="#" onClick={(e) => e.preventDefault()} style={{ color: 'var(--sky)', textDecoration: 'underline' }}>Learn more</a> about these pricing
                   </p>
                 </div>
+
+                {combined && pricing === 'manufacturer' && (
+                  <div
+                    style={{
+                      width: '100%',
+                      boxSizing: 'border-box',
+                      background: 'var(--pure)',
+                      border: '1px solid var(--sky)',
+                      borderLeftWidth: 7,
+                      borderRadius: 4,
+                      padding: '11px 7px 11px 14px',
+                    }}
+                  >
+                    <SavingsConsentBlock heading="Great News, Great Savings!" showRules optionalBeforeSignature />
+                  </div>
+                )}
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', fontSize: 16, fontWeight: 700, lineHeight: '24px', color: 'var(--pitch)' }}>
                   <span>Your total cost</span>
