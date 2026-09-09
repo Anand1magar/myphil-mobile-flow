@@ -25,7 +25,7 @@ const WHY_PHILRX = [
 function HipaaBadge() {
   return (
     <div style={{ position: 'relative', width: 81, height: 40, flexShrink: 0 }}>
-      <div style={{ background: '#191919', borderRadius: '1px 17px 1px 1px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3, padding: '8px 13px 8px 8px', position: 'relative' }}>
+      <div style={{ background: 'var(--foliage)', borderRadius: '1px 17px 1px 1px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3, padding: '8px 13px 8px 8px', position: 'relative' }}>
         <img src={hipaaVector} alt="" style={{ position: 'absolute', right: -8, top: 4, width: 16, height: 22 }} />
         <img src={hipaaLabel} alt="" style={{ width: 50, height: 13 }} />
         <img src={compliantLabel} alt="" style={{ width: 51, height: 7 }} />
