@@ -108,7 +108,7 @@ export function PaymentAccordions({ openSection: openProp, onOpenSectionChange }
                       <span style={{ width: 24, height: 24, borderRadius: 4, boxShadow: autoRefill ? 'none' : '0 0 0 1px var(--gunmetal)', background: autoRefill ? 'var(--sky)' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                         {autoRefill && <svg width="14" height="11" viewBox="0 0 14 11" fill="none"><path d="M1 5.5L5 9.5L13 1.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>}
                       </span>
-                      <span style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                      <span style={{ marginTop: 6, display: 'flex', flexDirection: 'column', gap: 4 }}>
                         <span style={{ fontSize: 16, lineHeight: '20px', color: 'var(--pitch)' }}>Ship refills automatically</span>
                         <span style={{ fontSize: 14, lineHeight: '20px', color: 'var(--pitch)' }}>
                           We&rsquo;ll notify before your refill ships. You can unenroll any time.{' '}
