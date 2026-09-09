@@ -74,7 +74,7 @@ export function DualPricingPage() {
                       border: '1px solid var(--sky)',
                       borderLeftWidth: 7,
                       borderRadius: 4,
-                      padding: '11px 7px 11px 14px',
+                      padding: '18px 12px',
                     }}
                   >
                     <SavingsConsentBlock heading="Great News, Great Savings!" showRules optionalBeforeSignature />
