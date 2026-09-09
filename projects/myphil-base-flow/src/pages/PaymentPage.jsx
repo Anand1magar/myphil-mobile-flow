@@ -37,12 +37,12 @@ export function PaymentPage() {
             We found your best price on Drugname (chemical compositions) (volume)!
           </p>
 
-          <div style={{ width: '100%', boxSizing: 'border-box', border: '1px solid var(--fade)', borderRadius: 4, padding: '8px 12px', display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-            <p style={{ margin: 0, fontSize: 16, fontWeight: 700, color: 'var(--pitch)' }}>
+          <div style={{ width: '100%', boxSizing: 'border-box', border: '1px solid var(--fade)', borderRadius: 4, padding: '20px 12px' }}>
+            <p style={{ margin: 0, fontSize: 16, fontWeight: 700, lineHeight: '26px', color: 'var(--pitch)' }}>
               30 Day Supply with Coupon for <span>$XX</span>{' '}
-              <span style={{ fontWeight: 400, textDecoration: 'line-through', color: '#9e9e9e' }}>$XX*</span>
+              <span style={{ fontWeight: 400, textDecoration: 'line-through', color: '#9e9e9e' }}>$XX*</span>{' '}
+              <span style={{ background: '#fee000', color: 'var(--pitch)', fontSize: 11, fontWeight: 700, padding: '2px 6px', borderRadius: 2, whiteSpace: 'nowrap' }}>93% OFF</span>
             </p>
-            <span style={{ background: '#fee000', color: 'var(--pitch)', fontSize: 11, fontWeight: 700, padding: '2px 6px', borderRadius: 2 }}>93% OFF</span>
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>

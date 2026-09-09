@@ -42,8 +42,8 @@ export function SecondChanceEnrollmentPage() {
                 <Button hierarchy="primary" onClick={() => navigate('/savings-enrollment-hipaa-authorization-combined')}>Enroll now</Button>
               </div>
 
-              <div style={{ width: '100%', boxSizing: 'border-box', border: '1px solid var(--fade)', borderRadius: 4, padding: '12px' }}>
-                <p style={{ margin: 0, fontSize: 16, fontWeight: 700, color: 'var(--pitch)' }}>30 Day Supply with Insurance for $XX</p>
+              <div style={{ width: '100%', boxSizing: 'border-box', border: '1px solid var(--fade)', borderRadius: 4, padding: '20px 12px' }}>
+                <p style={{ margin: 0, fontSize: 16, fontWeight: 700, lineHeight: '26px', color: 'var(--pitch)' }}>30 Day Supply with Insurance for $XX</p>
               </div>
 
               <p style={{ margin: 0, fontSize: 16, color: 'var(--pitch)' }}>
